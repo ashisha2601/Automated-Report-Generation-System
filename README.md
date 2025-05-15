@@ -26,6 +26,6 @@ A web-based system for uploading educational data and automatically generating i
 
 ## Contributers
 
-Ashisha Sharma 
-Anshul Joshi
+- Ashisha Sharma 
+- Anshul Joshi
 
