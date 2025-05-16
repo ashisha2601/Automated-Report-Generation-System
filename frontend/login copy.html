@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agastya International Foundation</title>
+    <link rel="stylesheet" href="Style.css">
+    <style>
+        /* Critical styles to ensure visibility of elements */
+        .assessment-section.active {
+            display: block !important;
+        }
+        
+        #login {
+            display: block !important;
+        }
+        
+        .user-profile {
+            display: none;
+        }
+        
+        /* Enhanced Filter Styles - Cleaner Design */
+        .improved-filter {
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            max-width: 1100px;
+            margin: 2rem auto;
+            padding: 2rem;
+        }
+        
+        .filter-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 1rem;
+        }
+        
+        .filter-icon {
+            font-size: 1.5rem;
+            color: #ff7a00;
+        }
+        
+        .filter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        /* Simplified Select Dropdown Styling */
+        .filter-select-container {
+            position: relative;
+            width: 100%;
+            margin-bottom: 1rem;
+        }
+        
+        .filter-label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #2d3436;
+        }
+        
+        .filter-select-header {
+            padding: 8px 12px;
+            background: #f7faff;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .filter-select-header:hover {
+            border-color: #ff7a00;
+        }
+        
+        .filter-selected-text {
+            color: #636e72;
+            font-size: 0.95rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 90%;
+        }
+        
+        .filter-dropdown-arrow {
+            color: #636e72;
+        }
+        
+        .filter-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+            max-height: 250px;
+            overflow-y: auto;
+            display: none;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .filter-dropdown.show {
+            display: block;
+        }
+        
+        .filter-search {
+            padding: 8px;
+            border-bottom: 1px solid #e0e0e0;
+            position: sticky;
+            top: 0;
+            background: #ffffff;
+        }
+        
+        .filter-search input {
+            width: 100%;
+            padding: 6px 10px;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+        
+        .filter-options {
+            padding: 4px 0;
+        }
+        
+        .filter-option {
+            padding: 8px 12px;
+            cursor: pointer;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+        }
+        
+        .filter-option:hover {
+            background: rgba(255, 122, 0, 0.1);
+        }
+        
+        .filter-option.selected {
+            background: rgba(255, 122, 0, 0.15);
+        }
+        
+        .filter-checkbox {
+            width: 16px;
+            height: 16px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            margin-right: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        
+        .filter-checkbox.checked {
+            background: #ff7a00;
+            border-color: #ff7a00;
+        }
+        
+        .filter-checkbox.checked::after {
+            content: '✓';
+            color: white;
+            font-size: 11px;
+        }
+        
+        /* Date Range Picker Styling */
+        .date-range {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .date-field {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .date-label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #2d3436;
+        }
+        
+        .date-input-wrapper {
+            position: relative;
+        }
+        
+        .date-input {
+            width: 100%;
+            padding: 8px 32px 8px 12px;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            font-size: 0.95rem;
+            background: #f7faff;
+        }
+        
+        .date-icon {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #636e72;
+            pointer-events: none;
+            font-size: 0.9rem;
+        }
+        
+        /* Filter Action Buttons */
+        .filter-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1.5rem;
+            border-top: 1px solid #e0e0e0;
+            padding-top: 1.5rem;
+        }
+        
+        .reset-btn {
+            padding: 8px 16px;
+            background: #f1f1f1;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .reset-btn:hover {
+            background: #e5e5e5;
+        }
+        
+        .apply-btn {
+            padding: 8px 20px;
+            background: #ff7a00;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .apply-btn:hover {
+            background: #e56e00;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <h1><span class="logo-text">Agastya International Foundation</span></h1>
+        </div>
+        <nav>
+            <a href="#home" class="active">Home</a>
+            <a href="#daily-assessment">Daily Assessment</a>
+            <a href="#impact-assessment">Impact Assessment</a>
+        </nav>
+        <div class="header-actions">
+            <a href="#login" class="login-btn" id="loginBtn">Login</a>
+            <div class="user-profile" id="userProfile">
+                <div class="profile-icon" id="profileIcon">A</div>
+                <div class="profile-dropdown" id="profileDropdown">
+                    <a href="#user-page" class="dropdown-item" onclick="showUserPage()">
+                        <span class="dropdown-icon">👤</span> Profile
+                    </a>
+                    <a href="#history-page" class="dropdown-item" onclick="showHistoryPage()">
+                        <span class="dropdown-icon">📋</span> History
+                    </a>
+                    <a href="#" class="dropdown-item" onclick="logout()">
+                        <span class="dropdown-icon">🚪</span> Logout
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Welcome to Agastya International Foundation</h1>
+            <p>Access reports and analytics for educational assessment</p>
+        </div>
+        <div class="hero-illustration">
+            <div class="circle"></div>
+            <div class="square"></div>
+            <div class="triangle"></div>
+        </div>
+    </section>
+
+    <!-- Main Feature Boxes -->
+    <section class="main-features">
+        <div class="assessment-box" onclick="openAssessment('daily-assessment')">
+            <div class="feature-icon">📊</div>
+            <h3>Daily Assessment</h3>
+            <p>Track and analyze daily educational activities and progress</p>
+            <a href="#daily-assessment" class="box-btn">Open</a>
+        </div>
+        
+        <div class="assessment-box" onclick="openAssessment('impact-assessment')">
+            <div class="feature-icon">📈</div>
+            <h3>Impact Assessment</h3>
+            <p>Measure and evaluate long-term educational outcomes</p>
+            <a href="#impact-assessment" class="box-btn">Open</a>
+        </div>
+    </section>
+
+    <!-- Daily Assessment Section -->
+    <section id="daily-assessment" class="assessment-section">
+        <!-- Upload Section -->
+        <section class="upload-section improved-upload">
+            <div class="upload-header">
+                <span class="upload-icon">📤</span>
+                <h2>Import DA File</h2>
+            </div>
+            <div class="upload-area" id="upload-area">
+                <input type="file" id="file-input" accept=".xlsx,.xls,.csv" hidden>
+                <button class="upload-btn" onclick="document.getElementById('file-input').click()">Choose File</button>
+                <span id="file-name" class="file-name">No file chosen</span>
+                <p class="upload-hint">or drag & drop here</p>
+            </div>
+        </section>
+
+        <!-- Filter Section -->
+        <section class="filter-section improved-filter">
+            <div class="filter-header">
+                <span class="filter-icon">🔎</span>
+                <h2>Filters</h2>
+            </div>
+            <form id="filter-form">
+                <div class="filter-grid">
+                    <!-- Donor: Single select -->
+                    <div class="filter-select-container" id="donor-select">
+                        <label class="filter-label">Donor</label>
+                        <div class="filter-select-header">
+                            <span class="filter-selected-text">Select donor</span>
+                            <span class="filter-dropdown-arrow">▼</span>
+                        </div>
+                        <div class="filter-dropdown">
+                            <div class="filter-search">
+                                <input type="text" placeholder="Search donor...">
+                            </div>
+                            <div class="filter-options">
+                                <div class="filter-option" data-value="1">Donor 1</div>
+                                <div class="filter-option" data-value="2">Donor 2</div>
+                                <div class="filter-option" data-value="3">Donor 3</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Grade: Multi-select -->
+                    <div class="filter-select-container" id="grade-select" data-multi="true">
+                        <label class="filter-label">Grade</label>
+                        <div class="filter-select-header">
+                            <span class="filter-selected-text">Select grades</span>
+                            <span class="filter-dropdown-arrow">▼</span>
+                        </div>
+                        <div class="filter-dropdown">
+                            <div class="filter-search">
+                                <input type="text" placeholder="Search grades...">
+                            </div>
+                            <div class="filter-options">
+                                <div class="filter-option" data-value="6">
+                                    <span class="filter-checkbox"></span>Class 6
+                                </div>
+                                <div class="filter-option" data-value="7">
+                                    <span class="filter-checkbox"></span>Class 7
+                                </div>
+                                <div class="filter-option" data-value="8">
+                                    <span class="filter-checkbox"></span>Class 8
+                                </div>
+                                <div class="filter-option" data-value="9">
+                                    <span class="filter-checkbox"></span>Class 9
+                                </div>
+                                <div class="filter-option" data-value="10">
+                                    <span class="filter-checkbox"></span>Class 10
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Subject: Multi-select -->
+                    <div class="filter-select-container" id="subject-select" data-multi="true">
+                        <label class="filter-label">Subject</label>
+                        <div class="filter-select-header">
+                            <span class="filter-selected-text">Select subjects</span>
+                            <span class="filter-dropdown-arrow">▼</span>
+                        </div>
+                        <div class="filter-dropdown">
+                            <div class="filter-search">
+                                <input type="text" placeholder="Search subjects...">
+                            </div>
+                            <div class="filter-options">
+                                <div class="filter-option" data-value="math">
+                                    <span class="filter-checkbox"></span>Math
+                                </div>
+                                <div class="filter-option" data-value="science">
+                                    <span class="filter-checkbox"></span>Science
+                                </div>
+                                <div class="filter-option" data-value="english">
+                                    <span class="filter-checkbox"></span>English
+                                </div>
+                                <div class="filter-option" data-value="history">
+                                    <span class="filter-checkbox"></span>History
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Region: Multi-select -->
+                    <div class="filter-select-container" id="region-select" data-multi="true">
+                        <label class="filter-label">Region</label>
+                        <div class="filter-select-header">
+                            <span class="filter-selected-text">Select regions</span>
+                            <span class="filter-dropdown-arrow">▼</span>
+                        </div>
+                        <div class="filter-dropdown">
+                            <div class="filter-search">
+                                <input type="text" placeholder="Search regions...">
+                            </div>
+                            <div class="filter-options">
+                                <div class="filter-option" data-value="1">
+                                    <span class="filter-checkbox"></span>Region 1
+                                </div>
+                                <div class="filter-option" data-value="2">
+                                    <span class="filter-checkbox"></span>Region 2
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- State: Multi-select -->
+                    <div class="filter-select-container" id="state-select" data-multi="true">
+                        <label class="filter-label">State</label>
+                        <div class="filter-select-header">
+                            <span class="filter-selected-text">Select states</span>
+                            <span class="filter-dropdown-arrow">▼</span>
+                        </div>
+                        <div class="filter-dropdown">
+                            <div class="filter-search">
+                                <input type="text" placeholder="Search states...">
+                            </div>
+                            <div class="filter-options">
+                                <div class="filter-option" data-value="1">
+                                    <span class="filter-checkbox"></span>State 1
+                                </div>
+                                <div class="filter-option" data-value="2">
+                                    <span class="filter-checkbox"></span>State 2
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Program Type: Multi-select -->
+                    <div class="filter-select-container" id="program-select" data-multi="true">
+                        <label class="filter-label">Program Type</label>
+                        <div class="filter-select-header">
+                            <span class="filter-selected-text">Select programs</span>
+                            <span class="filter-dropdown-arrow">▼</span>
+                        </div>
+                        <div class="filter-dropdown">
+                            <div class="filter-search">
+                                <input type="text" placeholder="Search programs...">
+                            </div>
+                            <div class="filter-options">
+                                <div class="filter-option" data-value="1">
+                                    <span class="filter-checkbox"></span>PT 1
+                                </div>
+                                <div class="filter-option" data-value="2">
+                                    <span class="filter-checkbox"></span>PT 2
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Topic: Multi-select -->
+                    <div class="filter-select-container" id="topic-select" data-multi="true">
+                        <label class="filter-label">Topic</label>
+                        <div class="filter-select-header">
+                            <span class="filter-selected-text">Select topics</span>
+                            <span class="filter-dropdown-arrow">▼</span>
+                        </div>
+                        <div class="filter-dropdown">
+                            <div class="filter-search">
+                                <input type="text" placeholder="Search topics...">
+                            </div>
+                            <div class="filter-options">
+                                <div class="filter-option" data-value="1">
+                                    <span class="filter-checkbox"></span>Topic 1
+                                </div>
+                                <div class="filter-option" data-value="2">
+                                    <span class="filter-checkbox"></span>Topic 2
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Date Range Filter -->
+                <div class="date-range">
+                    <div class="date-field">
+                        <span class="date-label">From Date:</span>
+                        <div class="date-input-wrapper">
+                            <input type="text" id="from-date" class="date-input" placeholder="dd----yyyy">
+                            <span class="date-icon">📅</span>
+                        </div>
+                    </div>
+                    
+                    <div class="date-field">
+                        <span class="date-label">To Date:</span>
+                        <div class="date-input-wrapper">
+                            <input type="text" id="to-date" class="date-input" placeholder="dd----yyyy">
+                            <span class="date-icon">📅</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="filter-actions">
+                    <button type="button" class="reset-btn" onclick="resetFilters()">Reset Filters</button>
+                    <button type="button" class="apply-btn" onclick="applyFilters()">Apply Filters</button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Report Generation Section -->
+        <section class="report-section improved-report">
+            <div class="report-header">
+                <span class="report-icon">📝</span>
+                <h2>Generate Report</h2>
+            </div>
+            <div class="report-options">
+                <label>Format: <strong>PPT</strong></label>
+                <button class="report-btn" onclick="generateReport()">Generate Report</button>
+            </div>
+        </section>
+    </section>
+
+    <!-- Impact Assessment Section -->
+    <section id="impact-assessment" class="assessment-section">
+        <!-- Upload Section -->
+        <section class="upload-section improved-upload">
+            <div class="upload-header">
+                <span class="upload-icon">📤</span>
+                <h2>Import IA File </h2>
+            </div>
+            <div class="upload-area" id="impact-upload-area">
+                <input type="file" id="impact-file-input" accept=".xlsx,.xls,.csv" hidden>
+                <button class="upload-btn" onclick="document.getElementById('impact-file-input').click()">Choose File</button>
+                <span id="impact-file-name" class="file-name">No file chosen</span>
+                <p class="upload-hint">or drag & drop here</p>
+            </div>
+        </section>
+
+        <!-- Filter Section -->
+        <section class="filter-section improved-filter">
+            <div class="filter-header">
+                <span class="filter-icon">🔎</span>
+                <h2>Filters</h2>
+            </div>
+            <form id="filter-form">
+                <div class="filter-grid">
+                    <!-- Donor: Single select -->
+                    <div class="filter-select-container" id="donor-select">
+                        <label class="filter-label">Donor</label>
+                        <div class="filter-select-header">
+                            <span class="filter-selected-text">Select donor</span>
+                            <span class="filter-dropdown-arrow">▼</span>
+                        </div>
+                        <div class="filter-dropdown">
+                            <div class="filter-search">
+                                <input type="text" placeholder="Search donor...">
+                            </div>
+                            <div class="filter-options">
+                                <div class="filter-option" data-value="1">Donor 1</div>
+                                <div class="filter-option" data-value="2">Donor 2</div>
+                                <div class="filter-option" data-value="3">Donor 3</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Grade: Multi-select -->
+                    <div class="filter-select-container" id="grade-select" data-multi="true">
+                        <label class="filter-label">Grade</label>
+                        <div class="filter-select-header">
+                            <span class="filter-selected-text">Select grades</span>
+                            <span class="filter-dropdown-arrow">▼</span>
+                        </div>
+                        <div class="filter-dropdown">
+                            <div class="filter-search">
+                                <input type="text" placeholder="Search grades...">
+                            </div>
+                            <div class="filter-options">
+                                <div class="filter-option" data-value="6">
+                                    <span class="filter-checkbox"></span>Class 6
+                                </div>
+                                <div class="filter-option" data-value="7">
+                                    <span class="filter-checkbox"></span>Class 7
+                                </div>
+                                <div class="filter-option" data-value="8">
+                                    <span class="filter-checkbox"></span>Class 8
+                                </div>
+                                <div class="filter-option" data-value="9">
+                                    <span class="filter-checkbox"></span>Class 9
+                                </div>
+                                <div class="filter-option" data-value="10">
+                                    <span class="filter-checkbox"></span>Class 10
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Subject: Multi-select -->
+                    <div class="filter-select-container" id="subject-select" data-multi="true">
+                        <label class="filter-label">Subject</label>
+                        <div class="filter-select-header">
+                            <span class="filter-selected-text">Select subjects</span>
+                            <span class="filter-dropdown-arrow">▼</span>
+                        </div>
+                        <div class="filter-dropdown">
+                            <div class="filter-search">
+                                <input type="text" placeholder="Search subjects...">
+                            </div>
+                            <div class="filter-options">
+                                <div class="filter-option" data-value="math">
+                                    <span class="filter-checkbox"></span>Math
+                                </div>
+                                <div class="filter-option" data-value="science">
+                                    <span class="filter-checkbox"></span>Science
+                                </div>
+                                <div class="filter-option" data-value="english">
+                                    <span class="filter-checkbox"></span>English
+                                </div>
+                                <div class="filter-option" data-value="history">
+                                    <span class="filter-checkbox"></span>History
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Region: Multi-select -->
+                    <div class="filter-select-container" id="region-select" data-multi="true">
+                        <label class="filter-label">Region</label>
+                        <div class="filter-select-header">
+                            <span class="filter-selected-text">Select regions</span>
+                            <span class="filter-dropdown-arrow">▼</span>
+                        </div>
+                        <div class="filter-dropdown">
+                            <div class="filter-search">
+                                <input type="text" placeholder="Search regions...">
+                            </div>
+                            <div class="filter-options">
+                                <div class="filter-option" data-value="1">
+                                    <span class="filter-checkbox"></span>Region 1
+                                </div>
+                                <div class="filter-option" data-value="2">
+                                    <span class="filter-checkbox"></span>Region 2
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- State: Multi-select -->
+                    <div class="filter-select-container" id="state-select" data-multi="true">
+                        <label class="filter-label">State</label>
+                        <div class="filter-select-header">
+                            <span class="filter-selected-text">Select states</span>
+                            <span class="filter-dropdown-arrow">▼</span>
+                        </div>
+                        <div class="filter-dropdown">
+                            <div class="filter-search">
+                                <input type="text" placeholder="Search states...">
+                            </div>
+                            <div class="filter-options">
+                                <div class="filter-option" data-value="1">
+                                    <span class="filter-checkbox"></span>State 1
+                                </div>
+                                <div class="filter-option" data-value="2">
+                                    <span class="filter-checkbox"></span>State 2
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Program Type: Multi-select -->
+                    <div class="filter-select-container" id="program-select" data-multi="true">
+                        <label class="filter-label">Program Type</label>
+                        <div class="filter-select-header">
+                            <span class="filter-selected-text">Select programs</span>
+                            <span class="filter-dropdown-arrow">▼</span>
+                        </div>
+                        <div class="filter-dropdown">
+                            <div class="filter-search">
+                                <input type="text" placeholder="Search programs...">
+                            </div>
+                            <div class="filter-options">
+                                <div class="filter-option" data-value="1">
+                                    <span class="filter-checkbox"></span>PT 1
+                                </div>
+                                <div class="filter-option" data-value="2">
+                                    <span class="filter-checkbox"></span>PT 2
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Topic: Multi-select -->
+                    <div class="filter-select-container" id="topic-select" data-multi="true">
+                        <label class="filter-label">Topic</label>
+                        <div class="filter-select-header">
+                            <span class="filter-selected-text">Select topics</span>
+                            <span class="filter-dropdown-arrow">▼</span>
+                        </div>
+                        <div class="filter-dropdown">
+                            <div class="filter-search">
+                                <input type="text" placeholder="Search topics...">
+                            </div>
+                            <div class="filter-options">
+                                <div class="filter-option" data-value="1">
+                                    <span class="filter-checkbox"></span>Topic 1
+                                </div>
+                                <div class="filter-option" data-value="2">
+                                    <span class="filter-checkbox"></span>Topic 2
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Date Range Filter -->
+                <div class="date-range">
+                    <div class="date-field">
+                        <span class="date-label">From Date:</span>
+                        <div class="date-input-wrapper">
+                            <input type="text" id="from-date" class="date-input" placeholder="dd----yyyy">
+                            <span class="date-icon">📅</span>
+                        </div>
+                    </div>
+                    
+                    <div class="date-field">
+                        <span class="date-label">To Date:</span>
+                        <div class="date-input-wrapper">
+                            <input type="text" id="to-date" class="date-input" placeholder="dd----yyyy">
+                            <span class="date-icon">📅</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="filter-actions">
+                    <button type="button" class="reset-btn" onclick="resetFilters()">Reset Filters</button>
+                    <button type="button" class="apply-btn" onclick="applyFilters()">Apply Filters</button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Report Generation Section -->
+        <section class="report-section improved-report">
+            <div class="report-header">
+                <span class="report-icon">📝</span>
+                <h2>Generate Report</h2>
+            </div>
+            <div class="report-options">
+                <label>Format: <strong>PPT</strong></label>
+                <button class="report-btn" onclick="generateReport()">Generate Report</button>
+            </div>
+        </section>
+    </section>
+
+    <!-- Login Section -->
+    <section id="login" class="login-section">
+        <div class="login-card">
+            <div class="login-tabs">
+                <button class="tab-btn active" id="loginTab" onclick="showLogin()">Login</button>
+            </div>
+            <form id="loginForm" class="login-form">
+                <label for="loginEmail">Email</label>
+                <input type="email" id="loginEmail" placeholder="Enter your email" required>
+                <div class="otp-container" id="loginOtpContainer">
+                    <label>Enter OTP sent to your email</label>
+                    <div class="otp-inputs">
+                        <input type="text" class="otp-input" maxlength="1" data-index="1">
+                        <input type="text" class="otp-input" maxlength="1" data-index="2">
+                        <input type="text" class="otp-input" maxlength="1" data-index="3">
+                        <input type="text" class="otp-input" maxlength="1" data-index="4">
+                    </div>
+                    <button type="button" class="verify-btn" id="verifyLoginOtp">Verify OTP</button>
+                    <a href="#" class="resend-otp" id="resendLoginOtp">Resend OTP</a>
+                </div>
+                <!-- <label for="loginPassword">OTP</label>
+                <input type="password" id="loginPassword" placeholder="Enter OTP" required> -->
+                <button type="button" id="requestLoginOtp" class="login-action-btn">Request OTP</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- User Profile Page -->
+    <section id="user-page" class="user-page">
+        <div class="profile-header">
+            <div class="profile-photo" id="profilePhoto">
+                <span>A</span>
+                <input type="file" id="photoUpload" accept="image/*" hidden>
+                <div class="upload-overlay" onclick="document.getElementById('photoUpload').click()">
+                    Change Photo
+                </div>
+            </div>
+            <div class="profile-info">
+                <h2 id="userName">Agastya User</h2>
+                <p id="userEmail">user@agastya.org</p>
+                <p>Member since: <span id="memberSince">Jan 2024</span></p>
+            </div>
+        </div>
+        <div class="profile-details">
+            <div class="detail-item">
+                <label for="fullName">Full Name</label>
+                <input type="text" id="fullName" placeholder="Enter your full name">
+            </div>
+            <div class="detail-item">
+                <label for="designation">Designation</label>
+                <input type="text" id="designation" placeholder="Enter your designation">
+            </div>
+            <div class="detail-item">
+                <label for="department">Department</label>
+                <input type="text" id="department" placeholder="Enter your department">
+            </div>
+            <button class="save-profile" id="saveProfile">Save Changes</button>
+        </div>
+    </section>
+
+    <!-- History Page -->
+    <section id="history-page" class="history-page">
+        <div class="history-header">
+            <h2>Activity History</h2>
+        </div>
+        <table class="history-table">
+            <thead>
+                <tr>
+                    <th>Date & Time</th>
+                    <th>Activity</th>
+                    <th>File Name</th>
+                    <th>Size</th>
+                    <th>Report ID</th>
+                </tr>
+            </thead>
+            <tbody id="historyTableBody">
+                <!-- History items will be loaded dynamically -->
+            </tbody>
+        </table>
+        <div class="pagination" id="historyPagination">
+            <button class="page-btn active">1</button>
+            <button class="page-btn">2</button>
+            <!-- <button class="page-btn">3</button> -->
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Contact Us</h4>
+                <p>Email: info@edufound.org</p>
+                <p>Phone: (555) 123-4567</p>
+            </div>
+            <div class="footer-section">
+                <h4>Follow Us</h4>
+                <div class="social-icons">
+                    <a href="#" class="social-icon">📱</a>
+                    <a href="#" class="social-icon">💻</a>
+                    <a href="#" class="social-icon">📧</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Agastya International Foundation. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Login Success Popup -->
+    <div class="popup-overlay" id="loginPopupOverlay"></div>
+    <div class="login-success-popup" id="loginSuccessPopup">
+        <span class="success-icon">✓</span>
+        <h3>Login Successful!</h3>
+        <p>Welcome back to Agastya International Foundation.</p>
+        <button class="popup-btn" id="closeLoginPopup">Continue</button>
+    </div>
+
+    <script>
+        // Fix for login box and assessment sections
+        document.addEventListener('DOMContentLoaded', function() {
+            // Make login section visible
+            document.getElementById('login').style.display = 'block';
+            
+            // Handle assessment section navigation
+            function openAssessment(sectionId) {
+                // Hide all assessment sections
+                const sections = document.querySelectorAll('.assessment-section');
+                sections.forEach(section => {
+                    section.classList.remove('active');
+                    section.style.display = 'none';
+                });
+                
+                // Show the selected section
+                const selectedSection = document.getElementById(sectionId);
+                if (selectedSection) {
+                    selectedSection.classList.add('active');
+                    selectedSection.style.display = 'block';
+                    selectedSection.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+            
+            // Add event listeners to assessment boxes
+            const dailyBox = document.querySelector('.assessment-box:nth-child(1)');
+            const impactBox = document.querySelector('.assessment-box:nth-child(2)');
+            
+            if (dailyBox) {
+                dailyBox.addEventListener('click', function() {
+                    openAssessment('daily-assessment');
+                });
+            }
+            
+            if (impactBox) {
+                impactBox.addEventListener('click', function() {
+                    openAssessment('impact-assessment');
+                });
+            }
+            
+            // Login functionality
+            const loginBtn = document.getElementById('loginBtn');
+            if (loginBtn) {
+                loginBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    document.getElementById('login').style.display = 'block';
+                    document.getElementById('login').scrollIntoView({ behavior: 'smooth' });
+                });
+            }
+            
+            // Add handlers for OTP verification
+            const requestOtpBtn = document.getElementById('requestLoginOtp');
+            if (requestOtpBtn) {
+                requestOtpBtn.addEventListener('click', function() {
+                    const email = document.getElementById('loginEmail').value;
+                    if (!email) {
+                        alert('Please enter your email');
+                        return;
+                    }
+                    document.getElementById('loginOtpContainer').classList.add('active');
+                    requestOtpBtn.style.display = 'none';
+                });
+            }
+            
+            const verifyOtpBtn = document.getElementById('verifyLoginOtp');
+            if (verifyOtpBtn) {
+                verifyOtpBtn.addEventListener('click', function() {
+                    // Simple login simulation
+                    document.getElementById('loginBtn').style.display = 'none';
+                    document.getElementById('userProfile').style.display = 'block';
+                    document.getElementById('login').style.display = 'none';
+                    alert('Login successful!');
+                });
+            }
+            
+            // Enhanced Filter Dropdown Implementation
+            const filterSelects = document.querySelectorAll('.filter-select-container');
+            
+            filterSelects.forEach(select => {
+                const header = select.querySelector('.filter-select-header');
+                const dropdown = select.querySelector('.filter-dropdown');
+                const options = select.querySelectorAll('.filter-option');
+                const selectedText = select.querySelector('.filter-selected-text');
+                const searchInput = select.querySelector('.filter-search input');
+                const isMulti = select.dataset.multi === 'true';
+                
+                // Toggle dropdown
+                header.addEventListener('click', () => {
+                    // Close all other dropdowns first
+                    document.querySelectorAll('.filter-dropdown.show').forEach(d => {
+                        if (d !== dropdown) d.classList.remove('show');
+                    });
+                    
+                    dropdown.classList.toggle('show');
+                    
+                    if (dropdown.classList.contains('show') && searchInput) {
+                        searchInput.focus();
+                    }
+                });
+                
+                // Close dropdown when clicking outside
+                document.addEventListener('click', (e) => {
+                    if (!select.contains(e.target)) {
+                        dropdown.classList.remove('show');
+                    }
+                });
+                
+                // Search functionality
+                if (searchInput) {
+                    searchInput.addEventListener('input', () => {
+                        const searchTerm = searchInput.value.toLowerCase();
+                        
+                        options.forEach(option => {
+                            const text = option.textContent.toLowerCase();
+                            if (text.includes(searchTerm)) {
+                                option.style.display = 'flex';
+                            } else {
+                                option.style.display = 'none';
+                            }
+                        });
+                    });
+                }
+                
+                // Handle option selection
+                options.forEach(option => {
+                    option.addEventListener('click', (e) => {
+                        const value = option.dataset.value;
+                        const text = option.textContent.trim();
+                        
+                        if (isMulti) {
+                            // For multi-select
+                            const checkbox = option.querySelector('.filter-checkbox');
+                            checkbox.classList.toggle('checked');
+                            option.classList.toggle('selected');
+                            
+                            // Update selected text
+                            const selectedOptions = Array.from(select.querySelectorAll('.filter-option.selected'));
+                            if (selectedOptions.length > 0) {
+                                if (selectedOptions.length <= 3) {
+                                    selectedText.textContent = selectedOptions
+                                        .map(opt => opt.textContent.trim().replace(/^[\s\uFEFF\xA0]+/, ''))
+                                        .join(', ');
+                                } else {
+                                    selectedText.textContent = `${selectedOptions.length} items selected`;
+                                }
+                            } else {
+                                selectedText.textContent = `Select ${select.id.split('-')[0]}s`;
+                            }
+                            
+                            // Prevent dropdown from closing on multi-select
+                            e.stopPropagation();
+                        } else {
+                            // For single select
+                            options.forEach(opt => opt.classList.remove('selected'));
+                            option.classList.add('selected');
+                            selectedText.textContent = text;
+                            
+                            // Close dropdown for single select
+                            dropdown.classList.remove('show');
+                        }
+                    });
+                });
+            });
+            
+            // Initialize date pickers with placeholder format
+            const dateInputs = document.querySelectorAll('.date-input');
+            dateInputs.forEach(input => {
+                input.addEventListener('focus', function() {
+                    if (this.value === '') {
+                        this.type = 'date';
+                    }
+                });
+                
+                input.addEventListener('blur', function() {
+                    if (this.value === '') {
+                        this.type = 'text';
+                    }
+                });
+            });
+        });
+        
+        // Define global functions
+        function applyFilters() {
+            // Collect all filter values
+            const filters = {};
+            
+            // Get single select values
+            document.querySelectorAll('.filter-select-container:not([data-multi="true"])').forEach(select => {
+                const selected = select.querySelector('.filter-option.selected');
+                if (selected) {
+                    filters[select.id.split('-')[0]] = selected.dataset.value;
+                }
+            });
+            
+            // Get multi-select values
+            document.querySelectorAll('.filter-select-container[data-multi="true"]').forEach(select => {
+                const selectedOptions = select.querySelectorAll('.filter-option.selected');
+                if (selectedOptions.length > 0) {
+                    filters[select.id.split('-')[0]] = Array.from(selectedOptions).map(opt => opt.dataset.value);
+                }
+            });
+            
+            // Get date range
+            const fromDate = document.getElementById('from-date').value;
+            const toDate = document.getElementById('to-date').value;
+            
+            if (fromDate) filters.fromDate = fromDate;
+            if (toDate) filters.toDate = toDate;
+            
+            console.log('Applied filters:', filters);
+            alert('Filters applied!');
+        }
+        
+        function resetFilters() {
+            // Reset all custom selects
+            document.querySelectorAll('.filter-select-container').forEach(select => {
+                const isMulti = select.dataset.multi === 'true';
+                const options = select.querySelectorAll('.filter-option');
+                const selectedText = select.querySelector('.filter-selected-text');
+                
+                options.forEach(option => {
+                    option.classList.remove('selected');
+                    if (isMulti) {
+                        const checkbox = option.querySelector('.filter-checkbox');
+                        if (checkbox) checkbox.classList.remove('checked');
+                    }
+                });
+                
+                selectedText.textContent = `Select ${select.id.split('-')[0]}s`;
+            });
+            
+            // Reset date inputs
+            document.querySelectorAll('.date-input').forEach(input => {
+                input.value = '';
+                input.type = 'text';
+            });
+            
+            alert('Filters have been reset');
+        }
+        
+        function applyImpactFilters() {
+            applyFilters(); // Reuse the same logic
+        }
+        
+        function generateReport() {
+            alert('Report generation initiated');
+        }
+        
+        function showUserPage() {
+            document.getElementById('user-page').style.display = 'block';
+            document.getElementById('history-page').style.display = 'none';
+            document.getElementById('profileDropdown').classList.remove('active');
+        }
+        
+        function showHistoryPage() {
+            document.getElementById('history-page').style.display = 'block';
+            document.getElementById('user-page').style.display = 'none';
+            document.getElementById('profileDropdown').classList.remove('active');
+        }
+        
+        function logout() {
+            document.getElementById('loginBtn').style.display = 'block';
+            document.getElementById('userProfile').style.display = 'none';
+            alert('Logged out successfully');
+        }
+        
+        // Toggle profile dropdown
+        document.addEventListener('DOMContentLoaded', function() {
+            const profileIcon = document.getElementById('profileIcon');
+            const profileDropdown = document.getElementById('profileDropdown');
+            
+            if (profileIcon && profileDropdown) {
+                profileIcon.addEventListener('click', function() {
+                    profileDropdown.classList.toggle('active');
+                });
+            }
+        });
+    </script>
+    <script src="main.js"></script>
+</body>
+</html> 
