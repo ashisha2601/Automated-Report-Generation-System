@@ -254,6 +254,7 @@
     </style>
 </head>
 <body>
+
     <!-- Header -->
     <header>
         <div class="logo">
@@ -298,14 +299,14 @@
 
     <!-- Main Feature Boxes -->
     <section class="main-features">
-        <div class="assessment-box" onclick="openAssessment('daily-assessment')">
+        <div class="assessment-box">
             <div class="feature-icon">📊</div>
             <h3>Daily Assessment</h3>
             <p>Track and analyze daily educational activities and progress</p>
             <a href="#daily-assessment" class="box-btn">Open</a>
         </div>
         
-        <div class="assessment-box" onclick="openAssessment('impact-assessment')">
+        <div class="assessment-box">
             <div class="feature-icon">📈</div>
             <h3>Impact Assessment</h3>
             <p>Measure and evaluate long-term educational outcomes</p>
@@ -793,8 +794,6 @@
                     <button type="button" class="verify-btn" id="verifyLoginOtp">Verify OTP</button>
                     <a href="#" class="resend-otp" id="resendLoginOtp">Resend OTP</a>
                 </div>
-                <!-- <label for="loginPassword">OTP</label>
-                <input type="password" id="loginPassword" placeholder="Enter OTP" required> -->
                 <button type="button" id="requestLoginOtp" class="login-action-btn">Request OTP</button>
             </form>
         </div>
@@ -1167,7 +1166,11 @@
                 });
             }
         });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('requestLoginOtp').addEventListener('click', requestLoginOtp);
+        });
     </script>
-    <script src="main.js"></script>
+    <script src="main.js?v=1678886400000"></script>
 </body>
 </html> 
