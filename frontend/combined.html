@@ -91,7 +91,8 @@
 
         /* Hero Section - Make it shorter */
         .hero {
-            padding: 2.5rem 2rem; /* Reduced padding */
+            height: 350px; /* Or 200px, depending on how compact you want it */
+            padding: 0 2rem;
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
             color: var(--white);
             display: flex;
@@ -99,6 +100,7 @@
             align-items: center;
             gap: 2rem;
         }
+
 
         .hero-content {
             max-width: 600px;
@@ -2646,18 +2648,17 @@
         console.log('--- Exiting showHistoryPage ---');
     }
 
-    function showUserPage() {
+    async function showUserPage() {
         console.log('--- Entering showUserPage ---');
          // Check if logged in
-        if (!isLoggedIn) {
+        if (!isLoggedIn || !currentUser || !currentUser.userId) {
             alert('Please log in to view your profile.');
              // Hide the dropdown and return
             document.getElementById('profileDropdown').classList.remove('active');
             // Optionally show the login page
-            // showLoginPage();
+            showLoginPage(); // Show login page if not logged in
             return;
         }
-
 
         // Hide all other sections first
         hideAllSections();
@@ -2670,6 +2671,45 @@
 
         // Hide the profile dropdown
         document.getElementById('profileDropdown').classList.remove('active');
+
+        // Fetch and populate profile data
+        try {
+            console.log(`Fetching profile data for user ${currentUser.userId}...`);
+            const response = await fetch(`${BACKEND_URL}/api/users/${currentUser.userId}`);
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                console.error('Failed to fetch profile data:', response.status, errorText);
+                 // Optionally show an error message on the profile page
+                 document.getElementById('fullName').value = 'Error loading profile';
+                 document.getElementById('designation').value = 'Error loading profile';
+                 document.getElementById('department').value = 'Error loading profile';
+                 alert(`Failed to load profile data: ${response.status}`);
+                return;
+            }
+
+            const profileData = await response.json();
+            console.log('Profile data fetched successfully:', profileData);
+
+            // Populate the input fields with fetched data
+            document.getElementById('fullName').value = profileData.name || ''; // Use name from backend
+            document.getElementById('designation').value = profileData.designation || '';
+            document.getElementById('department').value = profileData.department || '';
+
+             // Also update the header elements in case the name was updated
+            document.getElementById('userName').textContent = profileData.name || 'User';
+            document.getElementById('profileIcon').textContent = (profileData.name || 'U').charAt(0).toUpperCase();
+            document.getElementById('profilePhoto').querySelector('span').textContent = (profileData.name || 'U').charAt(0).toUpperCase();
+
+        } catch (error) {
+            console.error('Error fetching profile data:', error);
+             // Optionally show an error message on the profile page
+             document.getElementById('fullName').value = 'Error loading profile';
+             document.getElementById('designation').value = 'Error loading profile';
+             document.getElementById('department').value = 'Error loading profile';
+            alert('Failed to load profile data. Please try again.');
+        }
+
         console.log('--- Exiting showUserPage ---');
     }
 
@@ -2731,6 +2771,19 @@
         document.getElementById('login').style.display = 'block';
          // Optional: Add active-page class
          // document.getElementById('login').classList.add('active-page');
+
+        // Reset login form fields and state
+        document.getElementById('loginEmail').value = ''; // Clear email input
+        
+        // Clear OTP inputs
+        document.querySelectorAll('#loginOtpContainer .otp-input').forEach(input => {
+            input.value = '';
+        });
+        
+        document.getElementById('loginOtpContainer').classList.remove('active'); // Hide OTP container
+        document.getElementById('requestLoginOtp').style.display = 'block'; // Show Request OTP button
+
+
         updateNavLinks('login'); // Update active class on nav links
         console.log('--- Exiting showLoginPage ---');
      }
@@ -2767,7 +2820,7 @@
         document.getElementById('userProfile').style.display = 'none';
 
         // Redirect to home or show login page
-        showLoginPage(); // Show the login page after logout
+        showHomePage(); // Show the home page after logout
 
         console.log('--- User logged out ---');
     }
@@ -2872,11 +2925,24 @@
             }
         });
 
+        // --- Add event listener for the header login button ---
+        const loginBtnHeader = document.getElementById('loginBtn');
+        if (loginBtnHeader) {
+            loginBtnHeader.addEventListener('click', function(event) {
+                event.preventDefault(); // Prevent default anchor link behavior
+                showLoginPage(); // Call the function to show the login page
+                console.log('Header Login button clicked, showing login page.');
+            });
+             console.log('Click listener added to header login button');
+        } else {
+            console.error('Header Login button not found!');
+        }
+
 
         // --- Add event listeners for Navigation Links ---
         document.querySelectorAll('nav a').forEach(link => {
             link.addEventListener('click', function(event) {
-               event.preventDefault(); // Prevent default anchor link behavior
+               
                 const targetId = this.getAttribute('href').substring(1); // Get the section ID (e.g., "home", "daily-assessment")
                 console.log('Nav link clicked:', targetId); // Add this log to confirm clicks are detected
 
@@ -2927,7 +2993,6 @@
          } else {
             showLoginPage();
          }
-
 
          // --- Add event listeners for Filter Dropdowns ---
          document.querySelectorAll('.filter-select-header').forEach(header => {
@@ -3113,6 +3178,71 @@
 
     }); // Closes the final DOMContentLoaded listener
 
+    // Function to save user profile changes
+    async function saveUserProfile() {
+        console.log('--- Entering saveUserProfile ---');
+        if (!currentUser || !currentUser.userId) {
+            alert('Please log in to save your profile.');
+            console.error('Save profile failed: User not logged in or userId is missing.');
+            return;
+        }
+
+        const fullNameInput = document.getElementById('fullName');
+        const designationInput = document.getElementById('designation');
+        const departmentInput = document.getElementById('department');
+
+        const updatedProfileData = {
+            userId: currentUser.userId,
+            fullName: fullNameInput ? fullNameInput.value : null,
+            designation: designationInput ? designationInput.value : null,
+            department: departmentInput ? departmentInput.value : null
+        };
+
+        console.log('Attempting to save profile data:', updatedProfileData);
+
+        try {
+            const response = await fetch(`${BACKEND_URL}/api/users/${currentUser.userId}`, {
+                method: 'PUT', // Assuming a PUT or PATCH method for updating
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(updatedProfileData)
+            });
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                console.error('Failed to save profile:', response.status, errorText);
+                throw new Error(`Failed to save profile: ${response.status} - ${errorText}`);
+            }
+
+            const result = await response.json();
+            console.log('Profile saved successfully:', result);
+            alert('Profile updated successfully!');
+
+            // Optionally update currentUser object and localStorage if the backend returns updated data
+            // if (result && result.user) {
+            //     currentUser = result.user;
+            //     localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            //     updateHeaderUI(currentUser); // Update header with potentially new name
+            // }
+
+        } catch (error) {
+            console.error('Error saving profile:', error);
+            alert(`Failed to save profile: ${error.message}`);
+        }
+         console.log('--- Exiting saveUserProfile ---');
+    }
+
+    // ... existing code ...
+
+        // Add event listener to the Save Profile button
+        const saveProfileBtn = document.getElementById('saveProfile');
+        if (saveProfileBtn) {
+            saveProfileBtn.addEventListener('click', saveUserProfile);
+            console.log('Click listener added to Save Profile button');
+        } else {
+            console.error('Save Profile button not found!');
+        }
     </script>
 </body>
 </html>

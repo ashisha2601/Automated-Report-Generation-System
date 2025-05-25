@@ -1,4 +1,4 @@
-from fastapi import APIRouter, UploadFile, File, HTTPException, Depends
+from fastapi import APIRouter, UploadFile, File, HTTPException, Depends, Form
 from pydantic import BaseModel
 from typing import Dict, List
 import shutil
@@ -23,9 +23,9 @@ class ReportRequest(BaseModel):
 
 @router.post("/upload")
 async def upload_file(
-    file: UploadFile = File(...),
-    userId: str = None,
-    fileId: str = None,
+    file: UploadFile = File(...), 
+    userId: str = Form(None), 
+    fileId: str = Form(None),
     db: Session = Depends(get_db)
 ):
     print(f"Attempting file upload for userId: {userId}, fileId: {fileId}, filename: {file.filename}")
@@ -80,7 +80,7 @@ async def upload_file(
             db.rollback()
             print(f"Error creating history entry for fileId {fileId}: {hist_e}")
             # Log the history error but don't necessarily fail the upload if the file saved.
-
+        
         return {
             "message": "File uploaded successfully",
             "fileId": fileId,
@@ -119,7 +119,7 @@ async def generate_report(
         # apply filters from request.filters, and generate the report (e.g., PPT).
         # The current code only records history and returns success message.
         print(f"Generating report for reportId: {request.reportId} with filters: {request.filters}")
-
+        
         return {
             "message": "Report generated successfully",
             "reportId": request.reportId,

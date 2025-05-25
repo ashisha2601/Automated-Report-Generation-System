@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter, HTTPException, Depends, Form
 from pydantic import BaseModel, EmailStr
 from typing import Optional
 import random
@@ -29,6 +29,12 @@ class UserResponse(BaseModel):
     name: str
     userId: str # Ensure this returns the backend's authoritative ID
     memberSince: str
+
+class ProfileUpdateRequest(BaseModel):
+    userId: str
+    fullName: Optional[str] = None
+    designation: Optional[str] = None
+    department: Optional[str] = None
 
 @router.post("/login")
 async def request_otp(request: LoginRequest):
@@ -86,5 +92,51 @@ async def verify_otp(verification: OTPVerification, db: Session = Depends(get_db
         userId=user.id, # Return the actual ID from the database (newly created or existing)
         memberSince=user.created_at.isoformat() if user.created_at else datetime.utcnow().isoformat() # Ensure memberSince is always a string
     )
+
+@router.put("/users/{userId}")
+async def update_user_profile(userId: str, profile_data: ProfileUpdateRequest, db: Session = Depends(get_db)):
+    print(f"Attempting to update profile for userId: {userId}")
+    user = db.query(User).filter(User.id == userId).first()
+    
+    if not user:
+        print(f"User not found: {userId}")
+        raise HTTPException(status_code=404, detail="User not found")
+
+    # Update user fields if provided in the request body
+    if profile_data.fullName is not None:
+        user.name = profile_data.fullName
+    if profile_data.designation is not None:
+        user.designation = profile_data.designation
+    if profile_data.department is not None:
+        user.department = profile_data.department
+
+    try:
+        db.commit()
+        db.refresh(user)
+        print(f"Profile updated successfully for userId: {userId}")
+        return {"message": "Profile updated successfully", "user": user}
+    except Exception as e:
+        db.rollback()
+        print(f"Error updating profile for userId {userId}: {e}")
+        raise HTTPException(status_code=500, detail=f"Failed to update profile: {e}")
+
+@router.get("/users/{userId}")
+async def get_user_profile(userId: str, db: Session = Depends(get_db)):
+    print(f"Attempting to fetch profile for userId: {userId}")
+    user = db.query(User).filter(User.id == userId).first()
+
+    if not user:
+        print(f"User not found: {userId}")
+        raise HTTPException(status_code=404, detail="User not found")
+
+    # Return user data, including potentially updated fields
+    return {
+        "userId": user.id,
+        "email": user.email,
+        "name": user.name, # This now comes from the database (updated name)
+        "designation": user.designation,
+        "department": user.department,
+        "memberSince": user.created_at.isoformat() if user.created_at else None
+    }
 
 __all__ = ["router"]

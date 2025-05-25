@@ -1,4 +1,4 @@
-from fastapi import APIRouter, UploadFile, File, HTTPException, Depends
+from fastapi import APIRouter, UploadFile, File, HTTPException, Depends, Form
 from pydantic import BaseModel
 from typing import Dict, List
 import shutil
@@ -24,8 +24,8 @@ class ReportRequest(BaseModel):
 @router.post("/upload")
 async def upload_file(
     file: UploadFile = File(...), 
-    userId: str = None, 
-    fileId: str = None,
+    userId: str = Form(None), 
+    fileId: str = Form(None),
     db: Session = Depends(get_db)
 ):
     if not userId or not fileId:
