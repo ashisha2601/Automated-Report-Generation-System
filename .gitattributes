@@ -1,0 +1,1 @@
+backend/uploads/daily_assessment/*.xlsx filter=lfs diff=lfs merge=lfs -text
