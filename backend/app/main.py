@@ -36,4 +36,5 @@ async def root():
 
 # Serve static files
 from fastapi.staticfiles import StaticFiles
-app.mount("/static", StaticFiles(directory="app/uploads"), name="static")
+
+app.mount("/static", StaticFiles(directory="../Frontend"), name="static")
