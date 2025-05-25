@@ -1,0 +1,3118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agastya International Foundation</title>
+    <!-- Inline Style.css content -->
+    <style>
+    /* Modern CSS Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #ff7a00;
+            --primary-dark: #d65e00;
+            --secondary: #ffe066;
+            --accent: #ff6b6b;
+            --text: #2d3436;
+            --text-light: #636e72;
+            --bg: #f9f9fb;
+            --white: #ffffff;
+            --border: #e0e0e0;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --radius: 12px;
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: var(--bg);
+        }
+
+        /* Header Styles */
+        header {
+            background: var(--white);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius);
+            transition: var(--transition);
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--primary);
+            background: rgba(79, 140, 255, 0.1);
+        }
+
+        .login-btn {
+            background: var(--primary);
+            color: var(--white);
+            padding: 0.7rem 1.5rem;
+            border-radius: var(--radius);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .login-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section - Make it shorter */
+        .hero {
+            padding: 2.5rem 2rem; /* Reduced padding */
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: var(--white);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .hero-content {
+            max-width: 600px;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem; /* Reduced margin */
+        }
+
+        .hero-illustration {
+            position: relative;
+            width: 300px;
+            height: 300px;
+        }
+
+        .circle, .square, .triangle {
+            position: absolute;
+            background: var(--white);
+            opacity: 0.2;
+        }
+
+        .circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            top: 0;
+            left: 0;
+        }
+
+        .square {
+            width: 100px;
+            height: 100px;
+            top: 100px;
+            left: 100px;
+        }
+
+        .triangle {
+            width: 0;
+            height: 0;
+            border-left: 75px solid transparent;
+            border-right: 75px solid transparent;
+            border-bottom: 130px solid var(--white);
+            top: 50px;
+            left: 150px;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 4rem 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* Upload Section (Moved Up & Improved) */
+        .improved-upload {
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 2.5rem 2rem 2rem 2rem;
+            position: relative;
+            z-index: 2;
+        }
+        .upload-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .upload-icon {
+            font-size: 2.5rem;
+            background: var(--primary);
+            color: var(--white);
+            border-radius: 50%;
+            padding: 0.5rem 0.7rem;
+            box-shadow: var(--shadow);
+        }
+        .upload-area {
+            border: 2.5px dashed var(--primary);
+            border-radius: var(--radius);
+            padding: 2.5rem 1rem;
+            text-align: center;
+            margin-top: 0.5rem;
+            cursor: pointer;
+            background: #f4f8ff;
+            transition: background 0.2s;
+            position: relative;
+        }
+        .upload-area:hover, .upload-area:focus-within {
+            background: #eaf2ff;
+            border-color: var(--primary-dark);
+        }
+        .upload-btn {
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.7rem;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s;
+            box-shadow: 0 2px 8px rgba(79,140,255,0.08);
+        }
+        .upload-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+        .file-name {
+            display: block;
+            margin: 0.5rem 0 0.2rem 0;
+            font-size: 1rem;
+            color: var(--primary-dark);
+            font-weight: 500;
+        }
+        .upload-hint {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            margin-top: 0.2rem;
+        }
+
+        /* Improved Filter Section Styling */
+        .improved-filter {
+            background: var(--white); /* White background */
+            border-radius: var(--radius); /* Rounded corners */
+            box-shadow: var(--shadow); /* Subtle shadow */
+            max-width: 1100px; /* Max width for larger screens */
+            margin: 2rem auto 2.5rem auto; /* Center with margin and space below */
+            padding: 2.5rem 2.5rem 2rem 2.5rem; /* Internal padding (slightly increased top/bottom) */
+            position: relative;
+            z-index: 2;
+        }
+        .filter-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem; /* Increased space below header */
+            padding-bottom: 1rem; /* Add padding below header */
+            border-bottom: 1px solid var(--border); /* Add a separator line */
+        }
+        .filter-icon {
+            font-size: 2.2rem; /* Slightly adjusted icon size */
+            background: var(--primary);
+            color: var(--white);
+            border-radius: 50%;
+            width: 3.5rem; /* Larger icon container */
+            height: 3.5rem; /* Larger icon container */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow);
+            flex-shrink: 0; /* Prevent shrinking */
+        }
+        .filter-header h2 {
+            font-size: 1.8rem; /* Header font size */
+            color: var(--text); /* Header text color */
+            margin: 0; /* Remove default margin */
+        }
+
+        /* The filter-divider seems redundant with the border-bottom on filter-header */
+        /* .filter-divider {
+            border: none;
+            border-top: 2px solid var(--border);
+            margin: 0.7rem 0 1.5rem 0;
+        } */
+
+        .filter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Adjust min width for columns */
+            gap: 1.5rem; /* Increased gap between grid items */
+            margin-bottom: 2rem; /* Space below the grid */
+        }
+
+        .filter-select-container {
+             position: relative; /* Needed for dropdown positioning */
+            width: 100%;
+        }
+
+        .filter-label {
+            font-weight: 500;
+            color: var(--text);
+            display: block; /* Ensure label is on its own line */
+            margin-bottom: 0.5rem; /* Space below label */
+            font-size: 0.95rem;
+        }
+
+
+        /* Style for the visible select header */
+        .filter-select-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 0.9rem 1.2rem; /* Padding */
+            border: 1.5px solid var(--border); /* Border */
+            border-radius: var(--radius); /* Rounded corners */
+            font-size: 1rem;
+            background: #f7faff; /* Light background */
+            transition: border-color 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+        }
+
+        .filter-select-container.active .filter-select-header {
+            border-color: var(--primary); /* Primary color border when active */
+            box-shadow: 0 0 0 2px rgba(255, 122, 0, 0.1); /* Subtle shadow when active */
+        }
+
+        .filter-selected-text {
+            overflow: hidden;
+            text-overflow: ellipsis; /* Add ellipsis for long text */
+            white-space: nowrap;
+            flex-grow: 1;
+            margin-right: 0.5rem; /* Space between text and arrow */
+            color: var(--text); /* Text color */
+        }
+
+        .filter-dropdown-arrow {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            transition: transform 0.3s ease;
+        }
+
+        .filter-select-container.active .filter-dropdown-arrow {
+            transform: rotate(180deg); /* Rotate arrow when active */
+        }
+
+
+        /* Style for the dropdown content */
+        .filter-dropdown {
+            position: absolute;
+            top: 100%; /* Position below the header */
+            left: 0;
+            width: 100%;
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            z-index: 10; /* Ensure it appears above other content */
+            max-height: 200px; /* Max height with scroll */
+            overflow-y: auto; /* Enable scrolling */
+            display: none; /* Hidden by default, controlled by JS */
+            margin-top: 0.5rem; /* Small space below header */
+        }
+
+        .filter-select-container.active .filter-dropdown {
+            display: block; /* Show when parent is active */
+        }
+
+        .filter-search input[type="text"] {
+            width: calc(100% - 1.5rem); /* Adjust for padding */
+            padding: 0.8rem 1rem;
+            margin: 0.5rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            font-size: 0.95rem;
+            outline: none;
+        }
+
+        .filter-options {
+            padding: 0.5rem 0;
+        }
+
+        .filter-option {
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            color: var(--text);
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .filter-option:hover {
+            background-color: #f7faff; /* Light background on hover */
+            color: var(--primary-dark);
+        }
+
+        /* Multi-select checkbox style */
+        .filter-checkbox {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 1.5px solid var(--border);
+            border-radius: 4px;
+            margin-right: 0.8rem;
+            background-color: var(--white);
+            transition: all 0.2s ease;
+            position: relative;
+            flex-shrink: 0; /* Prevent shrinking */
+        }
+
+        .filter-option.selected .filter-checkbox {
+            background-color: var(--primary); /* Primary color when selected */
+            border-color: var(--primary);
+        }
+
+        .filter-option.selected .filter-checkbox::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 5px;
+            width: 4px;
+            height: 8px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+
+
+        /* Date Range Input - Improved */
+        .date-range {
+            display: flex;
+            gap: 1.5rem; /* Increased gap */
+            align-items: center;
+            margin-top: 1rem; /* Space above date range */
+            margin-bottom: 1.5rem; /* Space below date range */
+            flex-wrap: wrap; /* Allow wrapping */
+        }
+
+        .date-field {
+            flex: 1; /* Allow date fields to grow */
+            min-width: 180px; /* Minimum width for date field */
+        }
+
+        .date-label {
+            font-weight: 500;
+            color: var(--text);
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .date-input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .date-input {
+            width: 100%;
+            padding: 0.9rem 1.2rem; /* Padding */
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius);
+            font-size: 1rem;
+            background: #f7faff;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            outline: none;
+            cursor: text; /* Text cursor for input */
+             /* Adjust padding-right to make space for the icon */
+            padding-right: 30px; /* Assuming icon is around 20px + 10px space */
+        }
+
+        .date-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(255, 122, 0, 0.1);
+        }
+
+        .date-icon {
+            position: absolute;
+            right: 12px; /* Position icon inside the input */
+            color: var(--text-light);
+            font-size: 1.1rem;
+            pointer-events: none; /* Allow clicks to pass through to the input */
+        }
+
+
+        .filter-actions {
+            display: flex;
+            justify-content: flex-end; /* Align buttons to the right */
+            gap: 1rem; /* Space between buttons */
+            margin-top: 1.5rem; /* Space above action buttons */
+        }
+
+        .filter-actions button {
+            padding: 0.9rem 2rem; /* Padding */
+            border-radius: var(--radius); /* Rounded corners */
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s, border-color 0.2s;
+            box-shadow: 0 2px 8px rgba(79,140,255,0.08);
+        }
+
+        .filter-actions .reset-btn {
+            background: none; /* No background for reset */
+            color: var(--text-light); /* Text color for reset */
+            border: 1.5px solid var(--border); /* Border for reset */
+            box-shadow: none; /* No shadow for reset */
+        }
+
+        .filter-actions .reset-btn:hover {
+            color: var(--text);
+            border-color: var(--text);
+            transform: translateY(-2px);
+        }
+
+
+        .filter-actions .apply-btn {
+            background: var(--primary); /* Primary background for apply */
+            color: var(--white); /* White text for apply */
+            border: none; /* No border for apply */
+        }
+
+        .filter-actions .apply-btn:hover {
+            background: var(--primary-dark); /* Darker primary on hover */
+            transform: translateY(-2px);
+        }
+
+        /* Add responsiveness */
+        @media (max-width: 768px) {
+            .improved-filter {
+                padding: 1.5rem; /* Reduced padding on smaller screens */
+            }
+
+            .filter-grid {
+                grid-template-columns: 1fr; /* Stack columns on smaller screens */
+            }
+
+            .date-range {
+                flex-direction: column; /* Stack date inputs */
+                gap: 1rem;
+            }
+
+            .filter-actions {
+                flex-direction: column; /* Stack buttons */
+                gap: 0.8rem;
+            }
+
+             .filter-actions button {
+                width: 100%; /* Full width buttons when stacked */
+                text-align: center;
+             }
+        }
+
+        /* Report Section */
+        .report-section {
+            background: var(--white);
+            padding: 2rem;
+            margin: 2rem auto;
+            max-width: 800px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        .report-options {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            margin-top: 1rem;
+        }
+
+        /* DA & IA Sections */
+        .da-section, .ia-section {
+            background: var(--white);
+            padding: 4rem 2rem;
+            margin: 2rem auto;
+            max-width: 1200px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .tool-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        .tool-preview {
+            height: 200px;
+            background: var(--bg);
+            border-radius: var(--radius);
+            margin: 1rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .tool-btn {
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: var(--radius);
+            cursor: pointer;
+            width: 100%;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .tool-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--white);
+            padding: 4rem 2rem 2rem;
+            margin-top: 4rem;
+            box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+
+        .footer-section a {
+            display: block;
+            color: var(--text-light);
+            text-decoration: none;
+            margin-bottom: 0.5rem;
+            transition: var(--transition);
+        }
+
+        .footer-section a:hover {
+            color: var(--primary);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-icon {
+            font-size: 1.5rem;
+            color: var(--text-light);
+            transition: var(--transition);
+        }
+
+        .social-icon:hover {
+            color: var(--primary);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-light);
+        }
+
+        /* Login Success Popup */
+        .login-success-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--white);
+            padding: 2rem;
+            border-radius: var(--radius);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            z-index: 2000;
+            text-align: center;
+            display: none;
+            animation: fadeInUp 0.4s ease-out;
+            max-width: 90%;
+            width: 400px;
+        }
+
+        .login-success-popup.show {
+            display: block;
+        }
+
+        .login-success-popup h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .login-success-popup p {
+            margin-bottom: 1.5rem;
+            color: var(--text);
+        }
+
+        .success-icon {
+            font-size: 3rem;
+            color: #4CAF50;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .popup-btn {
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .popup-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1999;
+            display: none;
+        }
+
+        .popup-overlay.show {
+            display: block;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -20px);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+
+            nav {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .hero-illustration {
+                display: none;
+            }
+
+            .filter-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .report-options {
+                flex-direction: column;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .feature-card, .tool-card {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+
+        /* --- Improved Report Section --- */
+        .improved-report {
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            max-width: 800px;
+            margin: 2.5rem auto 2rem auto;
+            padding: 2.5rem 2rem 2rem 2rem;
+            position: relative;
+            z-index: 2;
+        }
+        .report-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .report-icon {
+            font-size: 2.2rem;
+            background: var(--primary);
+            color: var(--white);
+            border-radius: 50%;
+            padding: 0.4rem 0.7rem;
+            box-shadow: var(--shadow);
+        }
+        .report-options {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            margin-top: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .report-options label {
+            font-size: 1.1rem;
+            color: var(--text);
+            font-weight: 500;
+        }
+        .report-select {
+            padding: 0.7rem 1.2rem;
+            border-radius: var(--radius);
+            border: 1.5px solid var(--border);
+            font-size: 1rem;
+            background: #f7faff;
+            transition: border 0.2s;
+            outline: none;
+        }
+        .report-select:focus {
+            border: 1.5px solid var(--primary);
+        }
+        .report-btn {
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(79,140,255,0.08);
+            transition: background 0.2s, transform 0.2s;
+        }
+        .report-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        /* --- Login Section --- */
+        .login-section {
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            max-width: 400px;
+            margin: 3rem auto 2rem auto;
+            padding: 2.5rem 2rem 2rem 2rem;
+            position: relative;
+            z-index: 2;
+        }
+        .login-card {
+            width: 100%;
+        }
+        .login-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .tab-btn {
+            background: #f7faff;
+            color: var(--primary-dark);
+            border: none;
+            padding: 0.7rem 2rem;
+            border-radius: var(--radius) var(--radius) 0 0;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+        }
+        .tab-btn.active {
+            background: var(--primary);
+            color: var(--white);
+        }
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .login-form label {
+            font-weight: 500;
+            color: var(--text);
+        }
+        .login-form input {
+            padding: 0.8rem 1rem;
+            border-radius: var(--radius);
+            border: 1.5px solid var(--border);
+            font-size: 1rem;
+            background: #f7faff;
+            transition: border 0.2s;
+            outline: none;
+        }
+        .login-form input:focus {
+            border: 1.5px solid var(--primary);
+        }
+        .login-action-btn {
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 0.9rem 2.2rem;
+            border-radius: var(--radius);
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(79,140,255,0.08);
+            transition: background 0.2s, transform 0.2s;
+            margin-top: 0.5rem;
+        }
+        .login-action-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+        .forgot-link {
+            color: var(--primary);
+            font-size: 0.95rem;
+            text-align: right;
+            text-decoration: none;
+            margin-top: -0.5rem;
+        }
+        .forgot-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Main Feature Boxes */
+        .main-features {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 3rem auto;
+            max-width: 1200px;
+            padding: 0 2rem;
+        }
+        
+        .assessment-box {
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 2.5rem;
+            flex: 1;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 100%;
+            max-width: 500px;
+        }
+        
+        .assessment-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+        
+        .assessment-box .feature-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+        
+        .assessment-box h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+        
+        .assessment-box p {
+            margin-bottom: 1.5rem;
+            color: var(--text-light);
+        }
+        
+        .assessment-box .box-btn {
+            background: var(--primary);
+            color: var(--white);
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            border-radius: var(--radius);
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .assessment-box .box-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Date Range Input - Improved */
+        .date-range {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .date-range label {
+            font-weight: 500;
+            color: var(--text);
+            min-width: 90px;
+        }
+        
+        .date-input {
+            flex: 1;
+            min-width: 150px;
+        }
+        
+        /* Section visibility */
+        .assessment-section {
+            display: none;
+        }
+        
+        .assessment-section.active {
+            display: block;
+        }
+
+        /* User Profile Icon & Dropdown */
+        .user-profile {
+            position: relative;
+            display: none; /* Hidden by default, shown after login */
+        }
+
+        .profile-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+
+        .profile-icon:hover {
+            border-color: var(--primary-dark);
+            transform: scale(1.05);
+        }
+
+        .profile-dropdown {
+            position: absolute;
+            top: calc(100% + 10px);
+            right: 0;
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            width: 200px;
+            z-index: 100;
+            overflow: hidden;
+            display: none;
+        }
+
+        .profile-dropdown.active {
+            display: block;
+            animation: fadeIn 0.3s ease-out forwards;
+        }
+
+        .dropdown-item {
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            text-decoration: none;
+            color: var(--text);
+            transition: var(--transition);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-item:hover {
+            background: rgba(255, 122, 0, 0.1);
+            color: var(--primary);
+        }
+
+        .dropdown-icon {
+            font-size: 1.2rem;
+            color: var(--primary);
+        }
+
+        /* OTP Verification */
+        .otp-container {
+            display: none;
+            margin: 1rem 0;
+        }
+
+        .otp-container.active {
+            display: block;
+            animation: fadeIn 0.3s ease-out forwards;
+        }
+
+        .otp-inputs {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            margin: 1rem 0;
+        }
+
+        .otp-input {
+            width: 3rem;
+            height: 3rem;
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius);
+            font-size: 1.2rem;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .otp-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(255, 122, 0, 0.1);
+        }
+
+        .verify-btn {
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: block;
+            margin: 1rem auto 0 auto;
+            transition: var(--transition);
+        }
+
+        .verify-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .resend-otp {
+            display: block;
+            text-align: center;
+            margin-top: 0.8rem;
+            color: var(--primary);
+            font-size: 0.9rem;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .resend-otp:hover {
+            text-decoration: underline;
+        }
+
+        /* User Profile Page */
+        .user-page {
+            background: var(--white); /* White background */
+            border-radius: var(--radius); /* Rounded corners */
+            box-shadow: var(--shadow); /* Subtle shadow */
+            max-width: 800px; /* Limit width */
+            margin: 2rem auto; /* Center with margin */
+            padding: 2.5rem 2rem; /* Internal padding */
+            /* display property is managed by JS, initial state should be none */
+        }
+
+        /* Ensure user-page is hidden by default via a specific rule if the above is overridden */
+        .user-page:not(.active-page) { /* Use a class that your JS will add/remove */
+             display: none;
+        }
+
+        .profile-header {
+            display: flex; /* Use flexbox for alignment */
+            align-items: center; /* Align items vertically */
+            gap: 2rem; /* Space between photo and info */
+            margin-bottom: 2rem; /* Space below header */
+            flex-wrap: wrap; /* Allow wrapping on smaller screens */
+            padding-bottom: 2rem; /* Add padding below header */
+            border-bottom: 1px solid var(--border); /* Add a separator line */
+        }
+
+        .profile-photo {
+            width: 100px; /* Adjust size */
+            height: 100px; /* Adjust size */
+            border-radius: 50%; /* Make it circular */
+            background: var(--primary); /* Primary background color */
+            color: var(--white); /* White text color */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem; /* Icon size */
+            position: relative;
+            overflow: hidden;
+            flex-shrink: 0; /* Prevent shrinking */
+        }
+
+        .profile-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-photo .upload-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0; /* Hidden by default */
+            transition: opacity 0.3s ease; /* Smooth transition on hover */
+            cursor: pointer;
+            font-size: 0.9rem;
+            text-align: center;
+            padding: 0.5rem;
+        }
+
+        .profile-photo:hover .upload-overlay {
+            opacity: 1; /* Show overlay on hover */
+        }
+
+
+        .profile-info {
+            flex-grow: 1; /* Allow info to take remaining space */
+        }
+
+        .profile-info h2 {
+            font-size: 2rem; /* Adjust font size */
+            color: var(--text); /* Text color */
+            margin-bottom: 0.5rem;
+        }
+
+        .profile-info p {
+            color: var(--text-light); /* Lighter text color */
+            margin-bottom: 0.3rem;
+            font-size: 1rem;
+        }
+
+        .profile-details {
+            margin-top: 2rem; /* Space above details section */
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem; /* Space between detail items */
+        }
+
+        .detail-item label {
+            font-weight: 500; /* Semibold label */
+            color: var(--text); /* Text color */
+            display: block; /* Make label a block element */
+            margin-bottom: 0.5rem; /* Space below label */
+        }
+
+        .detail-item input[type="text"] {
+            width: 100%; /* Full width input */
+            padding: 0.8rem 1rem; /* Padding */
+            border: 1.5px solid var(--border); /* Border */
+            border-radius: var(--radius); /* Rounded corners */
+            font-size: 1rem; /* Font size */
+            background: #f7faff; /* Light background */
+            transition: border 0.2s, box-shadow 0.2s; /* Smooth transition */
+            outline: none; /* Remove default outline */
+        }
+
+        .detail-item input[type="text"]:focus {
+            border-color: var(--primary); /* Primary color border on focus */
+            box-shadow: 0 0 0 2px rgba(255, 122, 0, 0.1); /* Subtle shadow on focus */
+        }
+
+        .save-profile {
+            background: var(--primary); /* Primary background */
+            color: var(--white); /* White text */
+            border: none;
+            padding: 0.9rem 2rem; /* Padding */
+            border-radius: var(--radius); /* Rounded corners */
+            font-size: 1.1rem; /* Font size */
+            font-weight: 600; /* Bold text */
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(79,140,255,0.08); /* Subtle shadow */
+            transition: background 0.2s, transform 0.2s; /* Smooth transition */
+            margin-top: 2rem; /* Space above button */
+            display: block; /* Make it a block button */
+            width: auto; /* Auto width based on content */
+            margin-left: auto; /* Align to the right */
+            margin-right: 0;
+        }
+
+        .save-profile:hover {
+            background: var(--primary-dark); /* Darker primary on hover */
+            transform: translateY(-2px); /* Slight lift effect */
+        }
+
+        /* Style for Recent Activity section within Profile Page if you decide to add it */
+        .recent-activity {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .recent-activity h3 {
+            color: var(--text);
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .activity-list {
+            /* Styles for the list of recent activities */
+        }
+
+        .activity-item {
+            /* Styles for individual activity items */
+            padding: 1rem 0;
+            border-bottom: 1px solid #eee;
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        /* --- Activity History Page Styles --- */
+        .history-page {
+            background: var(--white); /* Use white background like other sections */
+            border-radius: var(--radius); /* Apply rounded corners */
+            box-shadow: var(--shadow); /* Add a subtle shadow */
+            max-width: 900px; /* Limit width for better readability */
+            margin: 2rem auto; /* Center the section with margin */
+            padding: 2rem; /* Add internal padding */
+            /* display property is managed by JS, initial state should be none */
+        }
+
+        /* Ensure history-page is hidden by default via a specific rule if the above is overridden */
+        .history-page:not(.active-page) { /* Use a class that your JS will add/remove */
+             display: none;
+        }
+
+
+        .history-header {
+            margin-bottom: 1.5rem; /* Space below the header */
+            text-align: center; /* Center the header text */
+        }
+
+        .history-page h2 {
+            color: var(--text); /* Use main text color */
+            font-size: 1.8rem; /* Adjust font size */
+            margin-bottom: 0.5rem;
+        }
+
+        .history-table {
+            width: 100%; /* Make table take full width of its container */
+            border-collapse: collapse; /* Remove space between borders */
+            margin-bottom: 1.5rem; /* Space below the table before pagination */
+        }
+
+        .history-table th,
+        .history-table td {
+            text-align: left; /* Align text to the left */
+            padding: 1rem; /* Add padding inside cells */
+            border-bottom: 1px solid var(--border); /* Add bottom border to cells */
+        }
+
+        .history-table th {
+            background-color: #f7faff; /* Slightly different background for header */
+            font-weight: 600; /* Bold header text */
+            color: var(--text-light); /* Lighter text color for headers */
+            text-transform: uppercase; /* Uppercase header text */
+            font-size: 0.9rem; /* Smaller font for headers */
+        }
+
+        .history-table tbody tr:last-child td {
+            border-bottom: none; /* Remove bottom border from last row */
+        }
+
+        .history-table tbody tr:nth-child(even) {
+            background-color: #fcfcfc; /* Optional: Add subtle zebra striping for readability */
+        }
+
+        /* Style for 'No history records found.' message */
+        .history-table td[colspan="5"] {
+            text-align: center; /* Center the 'no records' message */
+            font-style: italic;
+            color: var(--text-light);
+        }
+
+
+        .pagination {
+            display: flex;
+            justify-content: center; /* Center pagination buttons */
+            gap: 0.5rem; /* Space between buttons */
+            margin-top: 1rem; /* Space above pagination */
+        }
+
+        .pagination-button { /* Assuming your buttons have this class based on the screenshot */
+            background: #f7faff; /* Light background for buttons */
+            color: var(--primary); /* Primary color for text */
+            border: 1.5px solid var(--border); /* Border matching input styles */
+            padding: 0.5rem 1rem; /* Padding */
+            border-radius: var(--radius); /* Rounded corners */
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition); /* Smooth transition */
+        }
+
+        .pagination-button:hover {
+            background: var(--primary); /* Primary background on hover */
+            color: var(--white); /* White text on hover */
+            border-color: var(--primary); /* Primary border on hover */
+            transform: translateY(-1px); /* Slight lift effect */
+        }
+
+        .pagination-button.active {
+            background: var(--primary); /* Active button style */
+            color: var(--white);
+            border-color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* Hide assessment sections by default */
+        .assessment-section {
+            display: none;
+        }
+
+        /* Optional: if you use an active class to show */
+        /*
+        .assessment-section.active-page {
+            display: block;
+        }
+        */
+
+    </style>
+</head>
+<body>
+
+   <!-- Header -->
+<header>
+    <div class="logo">
+        <h1><span class="logo-text">Agastya International Foundation</span></h1>
+    </div>
+    <nav>
+        <a href="#home" class="active">Home</a>
+        <a href="#daily-assessment">Daily Assessment</a>
+        <a href="#impact-assessment">Impact Assessment</a>
+    </nav>
+    <div class="header-actions">
+        <a href="#login" class="login-btn" id="loginBtn">Login</a>
+        <div class="user-profile" id="userProfile">
+            <div class="profile-icon" id="profileIcon">A</div>
+            <div class="profile-dropdown" id="profileDropdown">
+                <a href="#user-page" class="dropdown-item" onclick="showUserPage()">
+                    <span class="dropdown-icon">👤</span> Profile
+                </a>
+                <a href="#history-page" class="dropdown-item" onclick="showHistoryPage()">
+                    <span class="dropdown-icon">📋</span> History
+                </a>
+                <a href="#" class="dropdown-item" onclick="logout()">
+                    <span class="dropdown-icon">🚪</span> Logout
+                </a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Hero Section -->
+<section id="home" class="hero">
+    <div class="hero-content">
+        <h1>Welcome to Agastya International Foundation</h1>
+        <p>Access reports and analytics for educational assessment</p>
+    </div>
+    <div class="hero-illustration">
+        <div class="circle"></div>
+        <div class="square"></div>
+        <div class="triangle"></div>
+    </div>
+</section>
+
+<!-- Main Feature Boxes -->
+<section class="main-features">
+    <div class="assessment-box">
+        <div class="feature-icon">📊</div>
+        <h3>Daily Assessment</h3>
+        <p>Track and analyze daily educational activities and progress</p>
+        <a href="#daily-assessment" class="box-btn">Open</a>
+    </div>
+    
+    <div class="assessment-box">
+        <div class="feature-icon">📈</div>
+        <h3>Impact Assessment</h3>
+        <p>Measure and evaluate long-term educational outcomes</p>
+        <a href="#impact-assessment" class="box-btn">Open</a>
+    </div>
+</section>
+
+<!-- Daily Assessment Section -->
+<section id="daily-assessment" class="assessment-section">
+    <!-- Upload Section -->
+    <section class="upload-section improved-upload">
+        <div class="upload-header">
+            <span class="upload-icon">📤</span>
+            <h2>Import DA File</h2>
+        </div>
+        <div class="upload-area" id="upload-area">
+            <input type="file" id="file-input" accept=".xlsx,.xls,.csv" hidden>
+            <button class="upload-btn" onclick="document.getElementById('file-input').click()">Choose File</button>
+            <span id="file-name" class="file-name">No file chosen</span>
+            <p class="upload-hint">or drag & drop here</p>
+        </div>
+    </section>
+
+    <!-- Filter Section -->
+    <section class="filter-section improved-filter">
+        <div class="filter-header">
+            <span class="filter-icon">🔎</span>
+            <h2>Filters</h2>
+        </div>
+        <form id="filter-form">
+            <div class="filter-grid">
+                <!-- Donor: Single select -->
+                <div class="filter-select-container" id="donor-select">
+                    <label class="filter-label">Donor</label>
+                    <div class="filter-select-header">
+                        <span class="filter-selected-text">Select donor</span>
+                        <span class="filter-dropdown-arrow">▼</span>
+                    </div>
+                    <div class="filter-dropdown">
+                        <div class="filter-search">
+                            <input type="text" placeholder="Search donor...">
+                        </div>
+                        <div class="filter-options">
+                            <div class="filter-option" data-value="1">Donor 1</div>
+                            <div class="filter-option" data-value="2">Donor 2</div>
+                            <div class="filter-option" data-value="3">Donor 3</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Grade: Multi-select -->
+                <div class="filter-select-container" id="grade-select" data-multi="true">
+                    <label class="filter-label">Grade</label>
+                    <div class="filter-select-header">
+                        <span class="filter-selected-text">Select grades</span>
+                        <span class="filter-dropdown-arrow">▼</span>
+                    </div>
+                    <div class="filter-dropdown">
+                        <div class="filter-search">
+                            <input type="text" placeholder="Search grades...">
+                        </div>
+                        <div class="filter-options">
+                            <div class="filter-option" data-value="6">
+                                <span class="filter-checkbox"></span>Class 6
+                            </div>
+                            <div class="filter-option" data-value="7">
+                                <span class="filter-checkbox"></span>Class 7
+                            </div>
+                            <div class="filter-option" data-value="8">
+                                <span class="filter-checkbox"></span>Class 8
+                            </div>
+                            <div class="filter-option" data-value="9">
+                                <span class="filter-checkbox"></span>Class 9
+                            </div>
+                            <div class="filter-option" data-value="10">
+                                <span class="filter-checkbox"></span>Class 10
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Subject: Multi-select -->
+                <div class="filter-select-container" id="subject-select" data-multi="true">
+                    <label class="filter-label">Subject</label>
+                    <div class="filter-select-header">
+                        <span class="filter-selected-text">Select subjects</span>
+                        <span class="filter-dropdown-arrow">▼</span>
+                    </div>
+                    <div class="filter-dropdown">
+                        <div class="filter-search">
+                            <input type="text" placeholder="Search subjects...">
+                        </div>
+                        <div class="filter-options">
+                            <div class="filter-option" data-value="math">
+                                <span class="filter-checkbox"></span>Math
+                            </div>
+                            <div class="filter-option" data-value="science">
+                                <span class="filter-checkbox"></span>Science
+                            </div>
+                            <div class="filter-option" data-value="english">
+                                <span class="filter-checkbox"></span>English
+                            </div>
+                            <div class="filter-option" data-value="history">
+                                <span class="filter-checkbox"></span>History
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Region: Multi-select -->
+                <div class="filter-select-container" id="region-select" data-multi="true">
+                    <label class="filter-label">Region</label>
+                    <div class="filter-select-header">
+                        <span class="filter-selected-text">Select regions</span>
+                        <span class="filter-dropdown-arrow">▼</span>
+                    </div>
+                    <div class="filter-dropdown">
+                        <div class="filter-search">
+                            <input type="text" placeholder="Search regions...">
+                        </div>
+                        <div class="filter-options">
+                            <div class="filter-option" data-value="1">
+                                <span class="filter-checkbox"></span>Region 1
+                            </div>
+                            <div class="filter-option" data-value="2">
+                                <span class="filter-checkbox"></span>Region 2
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- State: Multi-select -->
+                <div class="filter-select-container" id="state-select" data-multi="true">
+                    <label class="filter-label">State</label>
+                    <div class="filter-select-header">
+                        <span class="filter-selected-text">Select states</span>
+                        <span class="filter-dropdown-arrow">▼</span>
+                    </div>
+                    <div class="filter-dropdown">
+                        <div class="filter-search">
+                            <input type="text" placeholder="Search states...">
+                        </div>
+                        <div class="filter-options">
+                            <div class="filter-option" data-value="1">
+                                <span class="filter-checkbox"></span>State 1
+                            </div>
+                            <div class="filter-option" data-value="2">
+                                <span class="filter-checkbox"></span>State 2
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Program Type: Multi-select -->
+                <div class="filter-select-container" id="program-select" data-multi="true">
+                    <label class="filter-label">Program Type</label>
+                    <div class="filter-select-header">
+                        <span class="filter-selected-text">Select programs</span>
+                        <span class="filter-dropdown-arrow">▼</span>
+                    </div>
+                    <div class="filter-dropdown">
+                        <div class="filter-search">
+                            <input type="text" placeholder="Search programs...">
+                        </div>
+                        <div class="filter-options">
+                            <div class="filter-option" data-value="1">
+                                <span class="filter-checkbox"></span>PT 1
+                            </div>
+                            <div class="filter-option" data-value="2">
+                                <span class="filter-checkbox"></span>PT 2
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Topic: Multi-select -->
+                <div class="filter-select-container" id="topic-select" data-multi="true">
+                    <label class="filter-label">Topic</label>
+                    <div class="filter-select-header">
+                        <span class="filter-selected-text">Select topics</span>
+                        <span class="filter-dropdown-arrow">▼</span>
+                    </div>
+                    <div class="filter-dropdown">
+                        <div class="filter-search">
+                            <input type="text" placeholder="Search topics...">
+                        </div>
+                        <div class="filter-options">
+                            <div class="filter-option" data-value="1">
+                                <span class="filter-checkbox"></span>Topic 1
+                            </div>
+                            <div class="filter-option" data-value="2">
+                                <span class="filter-checkbox"></span>Topic 2
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Date Range Filter -->
+            <div class="date-range">
+                <div class="date-field">
+                    <span class="date-label">From Date:</span>
+                    <div class="date-input-wrapper">
+                        <input type="text" id="from-date" class="date-input" placeholder="dd----yyyy">
+                        <span class="date-icon">📅</span>
+                    </div>
+                </div>
+                
+                <div class="date-field">
+                    <span class="date-label">To Date:</span>
+                    <div class="date-input-wrapper">
+                        <input type="text" id="to-date" class="date-input" placeholder="dd----yyyy">
+                        <span class="date-icon">📅</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="filter-actions">
+                <button type="button" class="reset-btn">Reset Filters</button> <!-- Removed onclick -->
+                <button type="button" class="apply-btn">Apply Filters</button> <!-- Removed onclick -->
+            </div>
+        </form>
+    </section>
+
+    <!-- Report Generation Section -->
+    <section class="report-section improved-report">
+        <div class="report-header">
+            <span class="report-icon">📝</span>
+            <h2>Generate Report</h2>
+        </div>
+        <div class="report-options">
+            <label>Format: <strong>PPT</strong></label>
+            <button class="report-btn" onclick="generateReport()">Generate Report</button>
+        </div>
+    </section>
+</section>
+
+<!-- Impact Assessment Section -->
+<section id="impact-assessment" class="assessment-section">
+    <!-- Upload Section -->
+    <section class="upload-section improved-upload">
+        <div class="upload-header">
+            <span class="upload-icon">📤</span>
+            <h2>Import IA File </h2>
+        </div>
+        <div class="upload-area" id="impact-upload-area">
+            <input type="file" id="impact-file-input" accept=".xlsx,.xls,.csv" hidden>
+            <button class="upload-btn" onclick="document.getElementById('impact-file-input').click()">Choose File</button>
+            <span id="impact-file-name" class="file-name">No file chosen</span>
+            <p class="upload-hint">or drag & drop here</p>
+        </div>
+    </section>
+
+    <!-- Filter Section -->
+    <section class="filter-section improved-filter">
+        <div class="filter-header">
+            <span class="filter-icon">🔎</span>
+            <h2>Filters</h2>
+        </div>
+        <form id="filter-form">
+            <div class="filter-grid">
+                <!-- Donor: Single select -->
+                <div class="filter-select-container" id="donor-select">
+                    <label class="filter-label">Donor</label>
+                    <div class="filter-select-header">
+                        <span class="filter-selected-text">Select donor</span>
+                        <span class="filter-dropdown-arrow">▼</span>
+                    </div>
+                    <div class="filter-dropdown">
+                        <div class="filter-search">
+                            <input type="text" placeholder="Search donor...">
+                        </div>
+                        <div class="filter-options">
+                            <div class="filter-option" data-value="1">Donor 1</div>
+                            <div class="filter-option" data-value="2">Donor 2</div>
+                            <div class="filter-option" data-value="3">Donor 3</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Grade: Multi-select -->
+                <div class="filter-select-container" id="grade-select" data-multi="true">
+                    <label class="filter-label">Grade</label>
+                    <div class="filter-select-header">
+                        <span class="filter-selected-text">Select grades</span>
+                        <span class="filter-dropdown-arrow">▼</span>
+                    </div>
+                    <div class="filter-dropdown">
+                        <div class="filter-search">
+                            <input type="text" placeholder="Search grades...">
+                        </div>
+                        <div class="filter-options">
+                            <div class="filter-option" data-value="6">
+                                <span class="filter-checkbox"></span>Class 6
+                            </div>
+                            <div class="filter-option" data-value="7">
+                                <span class="filter-checkbox"></span>Class 7
+                            </div>
+                            <div class="filter-option" data-value="8">
+                                <span class="filter-checkbox"></span>Class 8
+                            </div>
+                            <div class="filter-option" data-value="9">
+                                <span class="filter-checkbox"></span>Class 9
+                            </div>
+                            <div class="filter-option" data-value="10">
+                                <span class="filter-checkbox"></span>Class 10
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Subject: Multi-select -->
+                <div class="filter-select-container" id="subject-select" data-multi="true">
+                    <label class="filter-label">Subject</label>
+                    <div class="filter-select-header">
+                        <span class="filter-selected-text">Select subjects</span>
+                        <span class="filter-dropdown-arrow">▼</span>
+                    </div>
+                    <div class="filter-dropdown">
+                        <div class="filter-search">
+                            <input type="text" placeholder="Search subjects...">
+                        </div>
+                        <div class="filter-options">
+                            <div class="filter-option" data-value="math">
+                                <span class="filter-checkbox"></span>Math
+                            </div>
+                            <div class="filter-option" data-value="science">
+                                <span class="filter-checkbox"></span>Science
+                            </div>
+                            <div class="filter-option" data-value="english">
+                                <span class="filter-checkbox"></span>English
+                            </div>
+                            <div class="filter-option" data-value="history">
+                                <span class="filter-checkbox"></span>History
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Region: Multi-select -->
+                <div class="filter-select-container" id="region-select" data-multi="true">
+                    <label class="filter-label">Region</label>
+                    <div class="filter-select-header">
+                        <span class="filter-selected-text">Select regions</span>
+                        <span class="filter-dropdown-arrow">▼</span>
+                    </div>
+                    <div class="filter-dropdown">
+                        <div class="filter-search">
+                            <input type="text" placeholder="Search regions...">
+                        </div>
+                        <div class="filter-options">
+                            <div class="filter-option" data-value="1">
+                                <span class="filter-checkbox"></span>Region 1
+                            </div>
+                            <div class="filter-option" data-value="2">
+                                <span class="filter-checkbox"></span>Region 2
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- State: Multi-select -->
+                <div class="filter-select-container" id="state-select" data-multi="true">
+                    <label class="filter-label">State</label>
+                    <div class="filter-select-header">
+                        <span class="filter-selected-text">Select states</span>
+                        <span class="filter-dropdown-arrow">▼</span>
+                    </div>
+                    <div class="filter-dropdown">
+                        <div class="filter-search">
+                            <input type="text" placeholder="Search states...">
+                        </div>
+                        <div class="filter-options">
+                            <div class="filter-option" data-value="1">
+                                <span class="filter-checkbox"></span>State 1
+                            </div>
+                            <div class="filter-option" data-value="2">
+                                <span class="filter-checkbox"></span>State 2
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Program Type: Multi-select -->
+                <div class="filter-select-container" id="program-select" data-multi="true">
+                    <label class="filter-label">Program Type</label>
+                    <div class="filter-select-header">
+                        <span class="filter-selected-text">Select programs</span>
+                        <span class="filter-dropdown-arrow">▼</span>
+                    </div>
+                    <div class="filter-dropdown">
+                        <div class="filter-search">
+                            <input type="text" placeholder="Search programs...">
+                        </div>
+                        <div class="filter-options">
+                            <div class="filter-option" data-value="1">
+                                <span class="filter-checkbox"></span>PT 1
+                            </div>
+                            <div class="filter-option" data-value="2">
+                                <span class="filter-checkbox"></span>PT 2
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Topic: Multi-select -->
+                <div class="filter-select-container" id="topic-select" data-multi="true">
+                    <label class="filter-label">Topic</label>
+                    <div class="filter-select-header">
+                        <span class="filter-selected-text">Select topics</span>
+                        <span class="filter-dropdown-arrow">▼</span>
+                    </div>
+                    <div class="filter-dropdown">
+                        <div class="filter-search">
+                            <input type="text" placeholder="Search topics...">
+                        </div>
+                        <div class="filter-options">
+                            <div class="filter-option" data-value="1">
+                                <span class="filter-checkbox"></span>Topic 1
+                            </div>
+                            <div class="filter-option" data-value="2">
+                                <span class="filter-checkbox"></span>Topic 2
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Date Range Filter -->
+            <div class="date-range">
+                <div class="date-field">
+                    <span class="date-label">From Date:</span>
+                    <div class="date-input-wrapper">
+                        <input type="text" id="from-date" class="date-input" placeholder="dd----yyyy">
+                        <span class="date-icon">📅</span>
+                    </div>
+                </div>
+                
+                <div class="date-field">
+                    <span class="date-label">To Date:</span>
+                    <div class="date-input-wrapper">
+                        <input type="text" id="to-date" class="date-input" placeholder="dd----yyyy">
+                        <span class="date-icon">📅</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="filter-actions">
+                <button type="button" class="reset-btn">Reset Filters</button> <!-- Removed onclick -->
+                <button type="button" class="apply-btn">Apply Filters</button> <!-- Removed onclick -->
+            </div>
+        </form>
+    </section>
+
+    <!-- Report Generation Section -->
+    <section class="report-section improved-report">
+        <div class="report-header">
+            <span class="report-icon">📝</span>
+            <h2>Generate Report</h2>
+        </div>
+        <div class="report-options">
+            <label>Format: <strong>PPT</strong></label>
+            <button class="report-btn" onclick="generateReport()">Generate Report</button>
+        </div>
+    </section>
+</section>
+
+<!-- Login Section -->
+<section id="login" class="login-section">
+    <div class="login-card">
+        <div class="login-tabs">
+            <button class="tab-btn active" id="loginTab" onclick="showLogin()">Login</button>
+        </div>
+        <form id="loginForm" class="login-form">
+            <label for="loginEmail">Email</label>
+            <input type="email" id="loginEmail" placeholder="Enter your email" required>
+            <div class="otp-container" id="loginOtpContainer">
+                <label>Enter OTP sent to your email</label>
+                <div class="otp-inputs">
+                    <input type="text" class="otp-input" maxlength="1" data-index="1">
+                    <input type="text" class="otp-input" maxlength="1" data-index="2">
+                    <input type="text" class="otp-input" maxlength="1" data-index="3">
+                    <input type="text" class="otp-input" maxlength="1" data-index="4">
+                </div>
+                <button type="button" class="verify-btn" id="verifyLoginOtp">Verify OTP</button>
+                <a href="#" class="resend-otp" id="resendLoginOtp">Resend OTP</a>
+            </div>
+            <button type="button" id="requestLoginOtp" class="login-action-btn">Request OTP</button> <!-- Removed onclick -->
+        </form>
+    </div>
+</section>
+
+<!-- User Profile Page -->
+<section id="user-page" class="user-page">
+    <div class="profile-header">
+        <div class="profile-photo" id="profilePhoto">
+            <span>A</span>
+            <input type="file" id="photoUpload" accept="image/*" hidden>
+            <div class="upload-overlay" onclick="document.getElementById('photoUpload').click()">
+                Change Photo
+            </div>
+        </div>
+        <div class="profile-info">
+            <h2 id="userName">Agastya User</h2>
+            <p id="userEmail">user@agastya.org</p>
+            <p>Member since: <span id="memberSince">Jan 2024</span></p>
+        </div>
+    </div>
+    <div class="profile-details">
+        <div class="detail-item">
+            <label for="fullName">Full Name</label>
+            <input type="text" id="fullName" placeholder="Enter your full name">
+        </div>
+        <div class="detail-item">
+            <label for="designation">Designation</label>
+            <input type="text" id="designation" placeholder="Enter your designation">
+        </div>
+        <div class="detail-item">
+            <label for="department">Department</label>
+            <input type="text" id="department" placeholder="Enter your department">
+        </div>
+        <button class="save-profile" id="saveProfile">Save Changes</button>
+    </div>
+</section>
+
+<!-- History Page -->
+<section id="history-page" class="history-page">
+    <div class="history-header">
+        <h2>Activity History</h2>
+    </div>
+    <table class="history-table">
+        <thead>
+            <tr>
+                <th>Date & Time</th>
+                <th>Activity</th>
+                <th>File Name</th>
+                <th>Size</th>
+                <th>Report ID</th>
+            </tr>
+        </thead>
+        <tbody id="historyTableBody">
+            <!-- History items will be loaded dynamically -->
+        </tbody>
+    </table>
+    <div class="pagination" id="historyPagination">
+        <button class="page-btn active">1</button>
+        <button class="page-btn">2</button>
+        <!-- <button class="page-btn">3</button> -->
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <div class="footer-content">
+        <div class="footer-section">
+            <h4>Contact Us</h4>
+            <p>Email: info@edufound.org</p>
+            <p>Phone: (555) 123-4567</p>
+        </div>
+        <div class="footer-section">
+            <h4>Follow Us</h4>
+            <div class="social-icons">
+                <a href="#" class="social-icon">📱</a>
+                <a href="#" class="social-icon">💻</a>
+                <a href="#" class="social-icon">📧</a>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2024 Agastya International Foundation. All rights reserved.</p>
+    </div>
+</footer>
+
+<!-- Login Success Popup -->
+<div class="popup-overlay" id="loginPopupOverlay"></div>
+<div class="login-success-popup" id="loginSuccessPopup">
+    <span class="success-icon">✓</span>
+    <h3>Login Successful!</h3>
+    <p>Welcome back to Agastya International Foundation.</p>
+    <button class="popup-btn" id="closeLoginPopup">Continue</button>
+</div>
+    <script>
+    const BACKEND_URL = 'http://127.0.0.1:8000';
+    let isLoggedIn = false;
+    let currentUser = null;
+    let userHistory = [];
+
+    function generateUniqueIdForUser(email) {
+        return 'AIF' + Date.now() + '_' + btoa(email).replace(/[^a-zA-Z0-9]/g, '').slice(0, 8);
+    }
+
+    function generateUniqueId() {
+        const prefix = 'AIF';
+        const year = new Date().getFullYear();
+        const random = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
+        return `${prefix}${year}${random}`;
+    }
+
+    function formatDate(date) {
+        return new Intl.DateTimeFormat('en-US', {
+            year: 'numeric', month: 'short', day: 'numeric',
+            hour: '2-digit', minute: '2-digit'
+        }).format(new Date(date));
+    }
+
+    // Helper to add entry to history array and update UI if needed
+    function addHistoryEntry(entry) {
+        userHistory.push(entry);
+        // Optionally update UI here to show history
+        console.log('History added:', entry);
+    }
+
+    // Function to fetch user history from the backend
+    async function fetchUserHistory() {
+        if (!currentUser || !currentUser.userId) {
+            console.error('User not logged in or userId is missing.');
+            return;
+        }
+        
+        try {
+            console.log(`Fetching history for user ${currentUser.userId}...`);
+            const response = await fetch(`${BACKEND_URL}/api/history/${currentUser.userId}`);
+            
+            if (!response.ok) {
+                const errorText = await response.text();
+                console.error('Failed to fetch history:', response.status, errorText);
+                // Clear table and show an error message to the user
+                document.getElementById('historyTableBody').innerHTML = `<tr><td colspan="5">Error loading history: ${response.status}</td></tr>`;
+                return;
+            }
+            
+            const historyData = await response.json();
+            console.log('History fetched successfully:', historyData);
+            renderHistoryTable(historyData);
+            
+        } catch (error) {
+            console.error('Error fetching history:', error);
+            // Clear table and show a generic error message
+            document.getElementById('historyTableBody').innerHTML = '<tr><td colspan="5">Failed to load history.</td></tr>';
+        }
+    }
+
+    // Function to render history data in the table
+    function renderHistoryTable(historyItems) {
+        const tableBody = document.getElementById('historyTableBody');
+        tableBody.innerHTML = ''; // Clear existing rows
+
+        if (historyItems.length === 0) {
+            tableBody.innerHTML = '<tr><td colspan="5">No history records found.</td></tr>';
+            return;
+        }
+
+        historyItems.forEach(item => {
+            const row = document.createElement('tr');
+            
+            // Date & Time (Format using the formatDate helper)
+            const dateCell = document.createElement('td');
+            dateCell.textContent = formatDate(item.created_at);
+            row.appendChild(dateCell);
+            
+            // Activity
+            const activityCell = document.createElement('td');
+            activityCell.textContent = item.activity_type;
+            row.appendChild(activityCell);
+            
+            // File Name
+            const fileNameCell = document.createElement('td');
+            fileNameCell.textContent = item.file_name || '-'; // Use '-' if file_name is null
+            row.appendChild(fileNameCell);
+            
+            // Size (Backend doesn't provide size, use placeholder)
+            const sizeCell = document.createElement('td');
+            sizeCell.textContent = '-'; // Placeholder
+            row.appendChild(sizeCell);
+            
+            // Report ID
+            const reportIdCell = document.createElement('td');
+            reportIdCell.textContent = item.report_id || '-'; // Use '-' if report_id is null
+            if (item.report_id) {
+                 reportIdCell.classList.add('report-id'); // Add class for styling if needed
+            }
+            row.appendChild(reportIdCell);
+            
+            tableBody.appendChild(row);
+        });
+    }
+
+    // =============================
+    // 1A. Daily Assessment: File Upload & Filter Handling
+    // =============================
+
+    async function handleDailyAssessmentFile(file) {
+        if (!isLoggedIn || !currentUser || !currentUser.userId) { // More robust check
+            alert('Please log in before uploading files.');
+            console.error('Upload attempt failed: User not logged in or userId is missing.');
+            return null;
+        }
+
+        const fileId = generateUniqueId();
+        const fileData = new FormData();
+        fileData.append('file', file);
+        fileData.append('userId', currentUser.userId); // Should now be guaranteed to be available
+        fileData.append('fileId', fileId);
+
+        console.log('Attempting to upload Daily Assessment file.');
+        console.log('BACKEND_URL:', BACKEND_URL);
+
+        const uploadUrl = `${BACKEND_URL}/api/daily-assessment/upload`;
+        console.log('Fetching to URL:', uploadUrl);
+
+        // Log the contents of the FormData
+        console.log('FormData contents:');
+        for (let pair of fileData.entries()) {
+            console.log(pair[0]+ ': ' + pair[1]);
+        }
+
+        try {
+            const res = await fetch(uploadUrl, {
+                method: 'POST',
+                body: fileData
+            });
+
+            console.log('Upload fetch response status:', res.status);
+
+            if (!res.ok) {
+                const errorText = await res.text();
+                console.error('Upload failed response:', res.status, errorText);
+                throw new Error(`Upload failed: ${res.status} - ${errorText}`); // Include status and text
+            }
+
+            const result = await res.json();
+            console.log('Upload successful response:', result);
+            alert('Daily Assessment file uploaded successfully!'); // More specific alert
+
+
+            // Send history entry to backend (This part seems to be a separate fetch)
+            await fetch(`${BACKEND_URL}/api/history/`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                     user_id: currentUser.userId, // Use the valid userId
+                    activity_type: 'Daily Assessment File Upload',
+                    file_id: fileId,
+                    file_name: file.name,
+                     report_id: null,
+                     filters: {}
+                })
+            });
+            console.log('File upload history sent to backend.');
+
+
+            return fileId; // Return the generated fileId on success
+
+        } catch (err) {
+            console.error('Error during file upload fetch:', err);
+            alert(`Upload failed: ${err.message}`); // Show error message in alert
+            return null;
+        }
+    }
+
+    function getSelectedFilters(formId) {
+        const form = document.getElementById(formId);
+        if (!form) return {};
+        const formData = new FormData(form);
+        const filters = {};
+        for (let [key, value] of formData.entries()) {
+            if (!filters[key]) filters[key] = [];
+            filters[key].push(value);
+        }
+        return filters;
+    }
+
+    async function generateDailyAssessmentReport(relatedFileId = '-') {
+        if (!isLoggedIn || !currentUser) {
+            showLoginPopup('Please login to generate Daily Assessment report.');
+            return;
+        }
+
+        const reportId = generateUniqueId();
+        const filters = getSelectedFilters('filter-form');
+
+        try {
+            const res = await fetch(`${BACKEND_URL}/api/daily-assessment/report`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ userId: currentUser.userId, filters, reportId })
+            });
+            if (!res.ok) throw new Error('Failed to generate report');
+
+            addHistoryEntry({
+                date: new Date(),
+                activity: 'DA Report',
+                fileName: 'Daily_Assessment_Report',
+                fileSize: '-',
+                fileId: relatedFileId,
+                reportId: reportId
+            });
+
+            alert(`Daily Assessment report generated. ID: ${reportId}`);
+
+        } catch (error) {
+            alert('Failed to generate report. Please try again.');
+        }
+    }
+
+    // =============================
+    // 1B. Impact Assessment: File Upload & Filter Handling
+    // =============================
+
+    async function handleImpactAssessmentFile(file) {
+        if (!currentUser) {
+            alert('User not logged in.');
+            return null;
+        }
+        const fileId = generateUniqueId();
+        const fileData = new FormData();
+        fileData.append('file', file);
+        fileData.append('userId', currentUser.userId);
+        fileData.append('fileId', fileId);
+
+        try {
+            const res = await fetch(`${BACKEND_URL}/api/impact-assessment/upload`, {
+                method: 'POST',
+                body: fileData
+            });
+            if (!res.ok) throw new Error('Upload failed');
+            alert('Impact Assessment file uploaded');
+
+            addHistoryEntry({
+                date: new Date(),
+                activity: 'IA File Upload',
+                fileName: file.name,
+                fileSize: file.size,
+                fileId: fileId,
+                reportId: '-'
+            });
+
+            return fileId;
+
+        } catch (err) {
+            alert('Upload failed');
+            return null;
+        }
+    }
+
+    async function generateImpactAssessmentReport(relatedFileId = '-') {
+        if (!isLoggedIn || !currentUser) {
+            showLoginPopup('Please login to generate Impact Assessment report.');
+            return;
+        }
+
+        const reportId = generateUniqueId();
+        const filters = getSelectedFilters('impact-filter-form');
+
+        try {
+            const res = await fetch(`${BACKEND_URL}/api/impact-assessment/report`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ userId: currentUser.userId, filters, reportId })
+            });
+            if (!res.ok) throw new Error('Failed to generate report');
+
+            addHistoryEntry({
+                date: new Date(),
+                activity: 'IA Report',
+                fileName: 'Impact_Assessment_Report',
+                fileSize: '-',
+                fileId: relatedFileId,
+                reportId: reportId
+            });
+
+            alert(`Impact Assessment report generated. ID: ${reportId}`);
+
+        } catch (error) {
+            alert('Failed to generate report. Please try again.');
+        }
+    }
+
+    // =============================
+    // 2. Login Handling
+    // =============================
+    console.log('--- Entering requestLoginOtp function ---')
+
+    async function requestLoginOtp() {
+        console.log('--- Entering requestLoginOtp function ---');
+        const email = document.getElementById('loginEmail').value;
+
+        if (!email || !email.endsWith('@agastya.org')) {
+            alert('Please enter a valid @agastya.org email address');
+            console.log('--- Exiting requestLoginOtp due to invalid email ---\n\n');
+            return;
+        }
+
+        console.log('Attempting to send OTP request for:', email);
+
+        try {
+            console.log('Making fetch call to:', `${BACKEND_URL}/api/login`);
+            const res = await fetch(`${BACKEND_URL}/api/login`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email })
+            });
+
+            console.log('Fetch call completed. Response status:', res.status);
+
+            if (!res.ok) {
+                const errorText = await res.text();
+                console.error('Failed to send OTP:', res.status, errorText);
+                throw new Error(`Failed to send OTP: ${res.status} - ${errorText}`);
+            }
+
+            const data = await res.json();
+            console.log('OTP request successful:', data);
+            document.getElementById('loginOtpContainer').classList.add('active');
+            document.getElementById('requestLoginOtp').style.display = 'none';
+            document.querySelector('#loginOtpContainer .otp-input[data-index="1"]').focus();
+        } catch (error) {
+            console.error('Error during OTP request:', error);
+            alert('Failed to send OTP. Please check the console for details.');
+        }
+         console.log('--- Exiting requestLoginOtp function ---\n\n');
+    }
+
+    async function verifyLoginOtp() {
+        console.log('*** verifyLoginOtp function started ***');
+        console.log('--- Entering verifyLoginOtp function ---');
+        let otp = '';
+        document.querySelectorAll('#loginOtpContainer .otp-input').forEach(input => {
+            otp += input.value;
+        });
+
+        const email = document.getElementById('loginEmail').value;
+
+        console.log('Verifying OTP for:', email, 'OTP:', otp);
+
+        try {
+            const res = await fetch(`${BACKEND_URL}/api/verify-otp`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, otp, userId: generateUniqueIdForUser(email) })
+            });
+
+            if (!res.ok) {
+                const errorText = await res.text();
+                console.error('OTP verification failed:', res.status, errorText);
+                throw new Error('Invalid OTP');
+            }
+
+            const data = await res.json();
+            console.log('OTP verification successful. User data:', data);
+
+            loginUser({
+                email: data.email,
+                name: data.name,
+                userId: data.userId,
+                memberSince: data.memberSince || new Date().toDateString()
+            });
+
+            console.log('currentUser after loginUser call:', currentUser);
+
+            // Hide the login section
+            document.getElementById('login').style.display = 'none';
+
+            // Show login success popup
+            document.getElementById('loginPopupOverlay').classList.add('show');
+            document.getElementById('loginSuccessPopup').classList.add('show');
+
+            // Add event listener to the close button of the popup
+            document.getElementById('closeLoginPopup').addEventListener('click', () => {
+                // Hide the popup and overlay
+                document.getElementById('loginPopupOverlay').classList.remove('show');
+                document.getElementById('loginSuccessPopup').classList.remove('show');
+
+                // *** IMPORTANT: Call showHomePage() after popup is closed ***
+                showHomePage(); // This will display the home content
+
+                // The scrollIntoView might still be useful for a smooth transition if needed,
+                // but showing the section first is key.
+                // document.getElementById('home').scrollIntoView({ behavior: 'smooth' });
+            });
+
+            // Removed fetchUserHistory from here, will call when history page is shown
+            // fetchUserHistory();
+
+            console.log('--- Exiting verifyLoginOtp function ---');
+
+        } catch (error) {
+            console.error('Error during OTP verification:', error);
+            alert('Invalid OTP. Please try again.');
+        }
+    }
+
+    function loginUser(user) {
+        console.log('--- Entering loginUser function ---');
+        console.log('User data passed to loginUser:', user);
+        isLoggedIn = true;
+        currentUser = user;
+        console.log('Global currentUser inside loginUser:', currentUser);
+
+        // Store user data in localStorage
+        try {
+            localStorage.setItem('currentUser', JSON.stringify(user));
+            console.log('User data stored in localStorage.');
+        } catch (e) {
+            console.error('Failed to save user data to localStorage:', e);
+        }
+
+        // Update header UI - This part might need to be moved/called elsewhere too
+        updateHeaderUI(user);
+
+        console.log('--- Exiting loginUser function ---');
+    }
+
+    // Function to update the header UI after login
+    function updateHeaderUI(user) {
+        document.getElementById('loginBtn').style.display = 'none';
+        document.getElementById('userProfile').style.display = 'block';
+        document.getElementById('profileIcon').textContent = user.name.charAt(0).toUpperCase();
+        document.getElementById('userName').textContent = user.name;
+        document.getElementById('userEmail').textContent = user.email;
+        document.getElementById('memberSince').textContent = user.memberSince;
+        document.getElementById('profilePhoto').querySelector('span').textContent = user.name.charAt(0).toUpperCase();
+    }
+
+    // Function to check login status from localStorage on page load
+    function checkLoginStatusOnLoad() {
+        console.log('--- Checking login status from localStorage ---');
+        const storedUser = localStorage.getItem('currentUser');
+        if (storedUser) {
+            try {
+                currentUser = JSON.parse(storedUser);
+                isLoggedIn = true;
+                console.log('currentUser restored from localStorage:', currentUser);
+                // Update UI to show logged-in state
+                updateHeaderUI(currentUser);
+                 // Automatically show home page if logged in on load
+                 showHomePage(); // Added this line
+
+            } catch (e) {
+                console.error('Error parsing user data from localStorage:', e);
+                localStorage.removeItem('currentUser'); // Clear invalid data
+                isLoggedIn = false;
+                currentUser = null;
+                 // Show login page if stored data is invalid
+                 showLoginPage(); // Added this line
+            }
+        } else {
+            isLoggedIn = false;
+            currentUser = null;
+            console.log('No user data found in localStorage.');
+             // Show login page if not logged in
+             showLoginPage(); // Added this line
+        }
+         // Initial UI update based on login status (hide user profile if not logged in) - Redundant now with updateHeaderUI
+         /*
+         if (!isLoggedIn) {
+            document.getElementById('loginBtn').style.display = 'block';
+            document.getElementById('userProfile').style.display = 'none';
+         }
+         */
+         console.log('--- Finished checking login status ---');
+    }
+
+    // Function to hide all main content sections
+    function hideAllSections() {
+        document.getElementById('home').style.display = 'none';
+        document.querySelector('.main-features').style.display = 'none';
+        // Hide assessment sections - they have the class 'assessment-section'
+        // Use getElementById as they have specific IDs
+        document.getElementById('daily-assessment').style.display = 'none';
+        document.getElementById('impact-assessment').style.display = 'none';
+
+        document.getElementById('login').style.display = 'none'; // Hide login section too
+        document.getElementById('user-page').style.display = 'none';
+        document.getElementById('history-page').style.display = 'none';
+
+        // Optional: Remove active-page class from all sections
+        // document.querySelectorAll('section').forEach(section => section.classList.remove('active-page'));
+    }
+
+    function showHistoryPage() {
+        console.log('--- Entering showHistoryPage ---');
+        console.log('currentUser state in showHistoryPage:', currentUser);
+
+        // Check if currentUser is set before fetching history
+        if (!currentUser || !currentUser.userId) {
+            console.error('Cannot fetch history: User not logged in or userId is missing.');
+            alert('Please log in to view history.');
+             // Hide the dropdown and return
+            document.getElementById('profileDropdown').classList.remove('active');
+            // Optionally show the login page
+            // showLoginPage();
+            return;
+        }
+
+        // Hide all other sections first
+        hideAllSections();
+
+        // Then show the history page
+        document.getElementById('history-page').style.display = 'block';
+         // Optional: Add active-page class
+         // document.getElementById('history-page').classList.add('active-page');
+
+
+        // Hide the profile dropdown
+        document.getElementById('profileDropdown').classList.remove('active');
+
+        // Fetch and render history when the page is shown
+        fetchUserHistory();
+        console.log('--- Exiting showHistoryPage ---');
+    }
+
+    function showUserPage() {
+        console.log('--- Entering showUserPage ---');
+         // Check if logged in
+        if (!isLoggedIn) {
+            alert('Please log in to view your profile.');
+             // Hide the dropdown and return
+            document.getElementById('profileDropdown').classList.remove('active');
+            // Optionally show the login page
+            // showLoginPage();
+            return;
+        }
+
+
+        // Hide all other sections first
+        hideAllSections();
+
+        // Then show the user page
+        document.getElementById('user-page').style.display = 'block';
+         // Optional: Add active-page class
+         // document.getElementById('user-page').classList.add('active-page');
+
+
+        // Hide the profile dropdown
+        document.getElementById('profileDropdown').classList.remove('active');
+        console.log('--- Exiting showUserPage ---');
+    }
+
+    // Function to show the home page
+    function showHomePage() {
+         console.log('--- Entering showHomePage ---');
+         hideAllSections();
+         document.getElementById('home').style.display = 'block';
+         document.querySelector('.main-features').style.display = 'flex'; // Assuming main-features uses flex display
+         // You might also need to handle the active state of navigation links here
+         updateNavLinks('home'); // Call a function to update active class on nav links
+         console.log('--- Exiting showHomePage ---');
+    }
+
+    // Function to show the daily assessment page
+    function showDailyAssessmentPage() {
+        console.log('--- Entering showDailyAssessmentPage ---');
+        // Check if logged in
+        if (!isLoggedIn) {
+            alert('Please log in to access Daily Assessment.');
+            // Optionally show the login page
+            showLoginPage(); // Assuming you create a showLoginPage function
+            return;
+        }
+
+        hideAllSections();
+        document.getElementById('daily-assessment').style.display = 'block';
+        // Optional: Add active-page class
+        // document.getElementById('daily-assessment').classList.add('active-page');
+
+        updateNavLinks('daily-assessment'); // Update active class on nav links
+        console.log('--- Exiting showDailyAssessmentPage ---');
+    }
+
+     // Function to show the impact assessment page
+    function showImpactAssessmentPage() {
+        console.log('--- Entering showImpactAssessmentPage ---');
+         // Check if logged in
+        if (!isLoggedIn) {
+            alert('Please log in to access Impact Assessment.');
+            // Optionally show the login page
+            showLoginPage(); // Assuming you create a showLoginPage function
+            return;
+        }
+
+        hideAllSections();
+        document.getElementById('impact-assessment').style.display = 'block';
+         // Optional: Add active-page class
+         // document.getElementById('impact-assessment').classList.add('active-page');
+
+        updateNavLinks('impact-assessment'); // Update active class on nav links
+        console.log('--- Exiting showImpactAssessmentPage ---');
+    }
+
+    // Optional: Function to show the login page (useful if restricting access)
+     function showLoginPage() {
+        console.log('--- Entering showLoginPage ---');
+        hideAllSections();
+        document.getElementById('login').style.display = 'block';
+         // Optional: Add active-page class
+         // document.getElementById('login').classList.add('active-page');
+        updateNavLinks('login'); // Update active class on nav links
+        console.log('--- Exiting showLoginPage ---');
+     }
+
+
+    // Function to update active class on navigation links
+    function updateNavLinks(activeSectionId) {
+        document.querySelectorAll('nav a').forEach(navLink => {
+            navLink.classList.remove('active');
+            // Check if the href matches the active section ID
+            if (navLink.getAttribute('href').substring(1) === activeSectionId) {
+                navLink.classList.add('active');
+            }
+        });
+         // Handle the login/profile display in the header
+        if (isLoggedIn) {
+             document.getElementById('loginBtn').style.display = 'none';
+             document.getElementById('userProfile').style.display = 'block';
+        } else {
+             document.getElementById('loginBtn').style.display = 'block';
+             document.getElementById('userProfile').style.display = 'none';
+        }
+    }
+
+
+    function logout() {
+        console.log('--- Entering logout ---');
+        isLoggedIn = false;
+        currentUser = null;
+        localStorage.removeItem('currentUser'); // Clear user data from localStorage
+
+        // Update UI to show logged-out state
+        document.getElementById('loginBtn').style.display = 'block';
+        document.getElementById('userProfile').style.display = 'none';
+
+        // Redirect to home or show login page
+        showLoginPage(); // Show the login page after logout
+
+        console.log('--- User logged out ---');
+    }
+
+
+    // Function to toggle the profile dropdown visibility
+    function toggleProfileDropdown() {
+        console.log('--- Toggling profile dropdown ---');
+        const dropdown = document.getElementById('profileDropdown');
+        dropdown.classList.toggle('active');
+        console.log('Dropdown active state:', dropdown.classList.contains('active'));
+    }
+
+
+    // You also have resetFilters and applyFilters functions defined here.
+    // Keep these function definitions *outside* of the DOMContentLoaded listener
+    // so they are accessible when attached as event listeners.
+
+    function resetFilters() {
+        console.log('Resetting filters...');
+        // Add your filter reset logic here
+        // Example: Clear selected values, reset date inputs
+        document.querySelectorAll('.filter-select-container.active').forEach(container => {
+            container.classList.remove('active'); // Close dropdowns
+        });
+        document.querySelectorAll('.filter-option.selected').forEach(option => {
+            option.classList.remove('selected'); // Deselect options
+        });
+         document.querySelectorAll('.filter-select-container').forEach(container => {
+            const selectedTextSpan = container.querySelector('.filter-selected-text');
+            // Reset header text to default placeholder
+             if (container.id === 'donor-select') selectedTextSpan.textContent = 'Select donor';
+             else if (container.id === 'grade-select') selectedTextSpan.textContent = 'Select grades';
+             else if (container.id === 'subject-select') selectedTextSpan.textContent = 'Select subjects';
+             else if (container.id === 'region-select') selectedTextSpan.textContent = 'Select regions';
+             else if (container.id === 'state-select') selectedTextSpan.textContent = 'Select states';
+             else if (container.id === 'program-select') selectedTextSpan.textContent = 'Select programs';
+             else if (container.id === 'topic-select') selectedTextSpan.textContent = 'Select topics';
+             else selectedTextSpan.textContent = 'Select options';
+         });
+         document.getElementById('from-date').value = ''; // Clear date inputs
+         document.getElementById('to-date').value = ''; // Clear date inputs
+
+    }
+
+    function applyFilters() {
+        console.log('Applying filters...');
+        // Add your filter application logic here
+        // This is where you would likely collect the selected filter values
+        // and potentially trigger data fetching or report generation based on filters.
+        const filters = getSelectedFilters('filter-form'); // Reuse the existing function
+        console.log('Applied Filters:', filters);
+
+        // You might want to call your report generation function here,
+        // passing the collected filters.
+        // Example: generateDailyAssessmentReport(filters); // Or a new function for applying filters
+
+    }
+
+
+    // Call checkLoginStatusOnLoad when the script loads
+    checkLoginStatusOnLoad();
+
+
+    // Attach event listeners after defining functions
+    document.addEventListener('DOMContentLoaded', function() {
+        const requestOtpBtn = document.getElementById('requestLoginOtp');
+        if (requestOtpBtn) {
+             // Attach the correct function requestLoginOtp as the click listener
+             requestOtpBtn.addEventListener('click', requestLoginOtp);
+             console.log('Click listener added to Request OTP button');
+        } else {
+            console.error('Request OTP button not found!');
+        }
+
+        const verifyOtpBtn = document.getElementById('verifyLoginOtp');
+        if (verifyOtpBtn) {
+            verifyOtpBtn.addEventListener('click', verifyLoginOtp);
+            console.log('Click listener added to Verify OTP button');
+        } else {
+            console.error('Verify OTP button not found!');
+        }
+
+
+        // Add event listener to the profile icon
+        const profileIcon = document.getElementById('profileIcon');
+        if (profileIcon) {
+            profileIcon.addEventListener('click', toggleProfileDropdown);
+            console.log('Click listener added to profileIcon');
+        } else {
+            console.error('profileIcon element not found!');
+        }
+
+        // Close profile dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const userProfile = document.getElementById('userProfile');
+            const profileDropdown = document.getElementById('profileDropdown');
+            // Check if the click is outside the user-profile area and the dropdown is active
+            if (userProfile && profileDropdown && !userProfile.contains(event.target) && profileDropdown.classList.contains('active')) {
+                console.log('Clicked outside profile area, closing dropdown');
+                profileDropdown.classList.remove('active');
+            }
+        });
+
+
+        // --- Add event listeners for Navigation Links ---
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', function(event) {
+               event.preventDefault(); // Prevent default anchor link behavior
+                const targetId = this.getAttribute('href').substring(1); // Get the section ID (e.g., "home", "daily-assessment")
+                console.log('Nav link clicked:', targetId); // Add this log to confirm clicks are detected
+
+                // Use a switch statement or if-else to call the appropriate show function
+                switch (targetId) {
+                    case 'home':
+                        showHomePage();
+                        break;
+                    case 'daily-assessment':
+                        showDailyAssessmentPage();
+                        break;
+                    case 'impact-assessment':
+                        showImpactAssessmentPage();
+                        break;
+                    // Add other cases for other navigation links if any
+                    default:
+                        console.warn('Navigation link clicked with unhandled target:', targetId);
+                         // Optionally show home page by default for unhandled links
+                         showHomePage();
+                }
+            });
+        });
+
+        // --- Add event listeners for Main Feature Box Buttons ---
+         document.querySelectorAll('.main-features .box-btn').forEach(button => {
+             button.addEventListener('click', function(event) {
+                 event.preventDefault(); // Prevent default anchor link behavior
+                 const targetId = this.getAttribute('href').substring(1); // Get the section ID
+                 console.log('Feature box button clicked:', targetId); // Add this log to confirm clicks are detected
+
+                 // Similar logic as navigation links
+                 switch (targetId) {
+                    case 'daily-assessment':
+                        showDailyAssessmentPage();
+                        break;
+                    case 'impact-assessment':
+                        showImpactAssessmentPage();
+                        break;
+                    default:
+                        console.warn('Feature box button clicked with unhandled target:', targetId);
+                 }
+             });
+         });
+
+         // Initial state: show the home page or login page based on login status
+         if (isLoggedIn) {
+            showHomePage();
+         } else {
+            showLoginPage();
+         }
+
+
+         // --- Add event listeners for Filter Dropdowns ---
+         document.querySelectorAll('.filter-select-header').forEach(header => {
+             header.addEventListener('click', function() {
+                const container = this.closest('.filter-select-container'); // Get the parent container
+
+                 // Optional: Close other open dropdowns
+                 document.querySelectorAll('.filter-select-container.active').forEach(openContainer => {
+                     if (openContainer !== container) {
+                         openContainer.classList.remove('active');
+                     }
+                 });
+
+                 // Toggle the 'active' class on the clicked container
+                 container.classList.toggle('active');
+             });
+         });
+
+         // Optional: Close dropdowns when clicking outside any filter container
+         document.addEventListener('click', function(event) {
+             // Check if the click is outside any filter-select-container or a date input/icon
+             if (!event.target.closest('.filter-select-container') && !event.target.closest('.date-input-wrapper')) {
+                 document.querySelectorAll('.filter-select-container.active').forEach(container => {
+                     container.classList.remove('active');
+            });
+        }
+         });
+
+
+        // --- Add event listeners for Filter Options ---
+        document.querySelectorAll('.filter-option').forEach(option => {
+            option.addEventListener('click', function() {
+               const container = this.closest('.filter-select-container'); // Get the parent container
+                const selectedTextSpan = container.querySelector('.filter-selected-text'); // Get the span to update
+                const isMultiSelect = container.dataset.multi === 'true'; // Check if it's a multi-select
+
+                if (isMultiSelect) {
+                    // For multi-select, toggle the 'selected' class
+                    this.classList.toggle('selected');
+
+                    // Update the header text based on all selected options
+                    const selectedOptions = container.querySelectorAll('.filter-option.selected');
+                    if (selectedOptions.length === 0) {
+                         if (container.id === 'donor-select') selectedTextSpan.textContent = 'Select donor';
+                         else if (container.id === 'grade-select') selectedTextSpan.textContent = 'Select grades';
+                         else if (container.id === 'subject-select') selectedTextSpan.textContent = 'Select subjects';
+                         else if (container.id === 'region-select') selectedTextSpan.textContent = 'Select regions';
+                         else if (container.id === 'state-select') selectedTextSpan.textContent = 'Select states';
+                         else if (container.id === 'program-select') selectedTextSpan.textContent = 'Select programs';
+                         else if (container.id === 'topic-select') selectedTextSpan.textContent = 'Select topics';
+                         else selectedTextSpan.textContent = 'Select options';
+
+
+                    } else {
+                        const selectedValues = Array.from(selectedOptions).map(opt => opt.textContent.trim().replace('✔', ''));
+                        selectedTextSpan.textContent = selectedValues.join(', ');
+                    }
+
+
+                } else {
+                    container.querySelectorAll('.filter-option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    this.classList.add('selected');
+                    selectedTextSpan.textContent = this.textContent.trim();
+                    container.classList.remove('active'); // Close the dropdown after selection
+                }
+
+                console.log('Filter option clicked:', this.dataset.value, 'Multi-select:', isMultiSelect);
+            });
+        });
+
+
+        // --- Add event listeners for Filter Action Buttons ---
+        const resetBtn = document.querySelector('.filter-actions .reset-btn');
+        const applyBtn = document.querySelector('.filter-actions .apply-btn');
+
+        if (resetBtn) {
+            resetBtn.addEventListener('click', resetFilters);
+            console.log('Click listener added to Reset Filters button');
+        } else {
+            console.error('Reset Filters button not found!');
+        }
+
+        if (applyBtn) {
+            applyBtn.addEventListener('click', applyFilters);
+            console.log('Click listener added to Apply Filters button');
+        } else {
+            console.error('Apply Filters button not found!');
+        }
+
+
+        // --- Add event listener for Daily Assessment File Input ---
+        const dailyAssessmentFileInput = document.getElementById('file-input');
+        const dailyAssessmentFileNameSpan = document.getElementById('file-name'); // Assuming you want to display filename
+
+        if (dailyAssessmentFileInput) {
+            dailyAssessmentFileInput.addEventListener('change', async function(event) {
+                const file = event.target.files[0]; // Get the selected file
+                if (file) {
+                    console.log('Daily Assessment file selected:', file.name);
+                    // Optionally display the selected file name
+                    if (dailyAssessmentFileNameSpan) {
+                        dailyAssessmentFileNameSpan.textContent = file.name;
+                    }
+
+                    // Call the function to handle the file upload
+                    const uploadedFileId = await handleDailyAssessmentFile(file);
+                    if (uploadedFileId) {
+                         console.log('File uploaded successfully with ID:', uploadedFileId);
+                         // You might want to store this fileId or do something else after successful upload
+                         // e.g., enable report generation button, associate fileId with current session/form
+                         if (dailyAssessmentFileNameSpan) {
+                             dailyAssessmentFileNameSpan.textContent = file.name + ' (Uploaded)'; // Indicate success
+                         }
+                    } else {
+                         console.error('File upload failed.');
+                         // Handle upload failure (e.g., show error message)
+                         if (dailyAssessmentFileNameSpan) {
+                            dailyAssessmentFileNameSpan.textContent = 'Upload failed'; // Indicate failure
+                         }
+                    }
+
+                } else {
+                    console.log('No Daily Assessment file selected.');
+                     if (dailyAssessmentFileNameSpan) {
+                        dailyAssessmentFileNameSpan.textContent = 'No file chosen'; // Reset text
+                     }
+                }
+                 // Clear the file input value so the same file can be selected again if needed
+                event.target.value = '';
+            });
+             console.log('Change listener added to Daily Assessment file input');
+        } else {
+            console.error('Daily Assessment file input element (#file-input) not found!');
+        }
+
+
+        // --- Add event listener for Impact Assessment File Input (similar) ---
+        // Find the input element for Impact Assessment - it has id="impact-file-input"
+        const impactAssessmentFileInput = document.getElementById('impact-file-input');
+        const impactAssessmentFileNameSpan = document.getElementById('impact-file-name'); // Assuming you have a span for this filename
+
+        if (impactAssessmentFileInput) {
+            impactAssessmentFileInput.addEventListener('change', async function(event) {
+                const file = event.target.files[0]; // Get the selected file
+                if (file) {
+                    console.log('Impact Assessment file selected:', file.name);
+                     // Optionally display the selected file name
+                    if (impactAssessmentFileNameSpan) {
+                         impactAssessmentFileNameSpan.textContent = file.name;
+                    }
+
+                    // Call the function to handle the file upload for Impact Assessment
+                    const uploadedFileId = await handleImpactAssessmentFile(file); // Assuming you have this function
+                     if (uploadedFileId) {
+                         console.log('IA File uploaded successfully with ID:', uploadedFileId);
+                          // Handle success
+                           if (impactAssessmentFileNameSpan) {
+                               impactAssessmentFileNameSpan.textContent = file.name + ' (Uploaded)'; // Indicate success
+                           }
+                     } else {
+                          console.error('IA File upload failed.');
+                           if (impactAssessmentFileNameSpan) {
+                               impactAssessmentFileNameSpan.textContent = 'Upload failed'; // Indicate failure
+                           }
+                     }
+
+                } else {
+                    console.log('No Impact Assessment file selected.');
+                     if (impactAssessmentFileNameSpan) {
+                        impactAssessmentFileNameSpan.textContent = 'No file chosen'; // Reset text
+                     }
+                }
+                // Clear the file input value
+                event.target.value = '';
+            });
+             console.log('Change listener added to Impact Assessment file input');
+        } else {
+            console.error('Impact Assessment file input element (#impact-file-input) not found!');
+        }
+
+
+    }); // Closes the final DOMContentLoaded listener
+
+    </script>
+</body>
+</html>
