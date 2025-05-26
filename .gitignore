@@ -1,0 +1,5 @@
+# Ignore all uploaded Excel and report files
+backend/uploads/
+backend/reports/
+*.pyc
+__pycache__/

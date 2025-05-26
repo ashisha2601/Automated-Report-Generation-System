@@ -1,0 +1,8 @@
+id,user_id,activity_type,file_id,file_name,report_id,filters,created_at
+2e816326-a330-4c7f-81f3-af1e26788f5e,b2191e79-87b1-4afe-8581-5dea18a83af2,impact_assessment,AIF20256501,Gujarat IA Overall Score 2024-25.xlsx,,,2025-05-25T13:18:34.696762
+dae52d92-5d81-4f0d-a320-65758e7ed0f7,b2191e79-87b1-4afe-8581-5dea18a83af2,daily_assessment_upload,AIF20251364,Karnataka IA DA  2024-25.xlsx,,,2025-05-25T13:17:24.135471
+fdf36a51-9bae-4f7f-810c-78610fdaa9c6,f5b7fb7b-ddeb-4e84-97be-65fdef7a710e,impact_assessment,AIF20259263,Gujarat IA Overall Score 2024-25.xlsx,,,2025-05-25T12:45:28.128334
+cfdabea3-f4a1-4e1f-9a78-13f7c4bb7585,f5b7fb7b-ddeb-4e84-97be-65fdef7a710e,daily_assessment_upload,AIF20256377,Daily Assessment Data- Karnataka.xlsx,,,2025-05-25T12:45:16.663095
+4578d0b5-f67f-484a-ac38-6538d31cca7c,f5b7fb7b-ddeb-4e84-97be-65fdef7a710e,daily_assessment_upload,AIF20256752,Karnataka IA DA  2024-25.xlsx,,,2025-05-25T12:39:41.153524
+f0df0a73-b29e-4b41-8e5f-4f1ecd65314b,db3a0275-330e-4ad5-9d63-3b25d4f7b1c2,daily_assessment_upload,AIF20256372,Karnataka IA DA  2024-25.xlsx,,,2025-05-25T12:37:44.765422
+c05340d6-8321-4278-8315-34bdb8459997,f5b7fb7b-ddeb-4e84-97be-65fdef7a710e,daily_assessment_upload,AIF20253301,DA Data 2024-25.xlsx,,,2025-05-25T12:34:42.398259
