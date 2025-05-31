@@ -56,7 +56,7 @@ class DailyAssessmentAnalyzer:
                 },
                 'metrics': {}
             
-}
+                }
 
             # Calculate metrics for numeric columns
             numeric_columns = self.data.select_dtypes(include=[np.number]).columns

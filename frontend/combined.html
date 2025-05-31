@@ -1632,7 +1632,7 @@
                             <div class="filter-option" data-value="54">Caterpillar</div>
                             <div class="filter-option" data-value="55">LSI India</div>
                             <div class="filter-option" data-value="56">EXXON MOBIL</div>
-                            <div class="filter-option" data-value="57">Societe Generale Global Solution</div>
+                            <div class="filter-option" data-value="57">Societe Generale Global Solution</div>
                             <div class="filter-option" data-value="58">Alembic CSR foundation</div>
                             <div class="filter-option" data-value="59">Expleo Solutions Limited (SQS)</div>
                             <div class="filter-option" data-value="60">RACV</div>
@@ -1644,7 +1644,7 @@
                             <div class="filter-option" data-value="66">Infosys Foundation</div>
                             <div class="filter-option" data-value="67">Suven Trust</div>
                             <div class="filter-option" data-value="68">M TAR</div>
-                            <div class="filter-option" data-value="69">Lady Bamford Charitable Trust</div>
+                            <div class="filter-option" data-value="69">Lady Bamford Charitable Trust</div>
                             <div class="filter-option" data-value="70">Symbiogyne</div>
                             <div class="filter-option" data-value="71">Wells Fargo India Solutions  Pvt Ltd</div>
                             <div class="filter-option" data-value="72">Aequs Foundation</div>
@@ -2366,10 +2366,11 @@
     <button class="popup-btn" id="closeLoginPopup">Continue</button>
 </div>
     <script>
-    const BACKEND_URL = 'http://127.0.0.1:8000';
+    const BACKEND_URL = 'http://127.0.0.1:9000';
     let isLoggedIn = false;
     let currentUser = null;
     let userHistory = [];
+    let lastUploadedDailyAssessmentFileId = null; // Declare the variable here
 
     function generateUniqueIdForUser(email) {
         return 'AIF' + Date.now() + '_' + btoa(email).replace(/[^a-zA-Z0-9]/g, '').slice(0, 8);
@@ -2428,20 +2429,36 @@
 
     // Function to render history data in the table
     function renderHistoryTable(historyItems) {
+        console.log('renderHistoryTable called with:', historyItems); // Added log
         const tableBody = document.getElementById('historyTableBody');
+        
+        if (!tableBody) {
+            console.error('historyTableBody element not found!'); // Added log
+            return; // Exit if element not found
+        }
+
         tableBody.innerHTML = ''; // Clear existing rows
 
         if (historyItems.length === 0) {
+            console.log('No history items found, displaying message.'); // Added log
             tableBody.innerHTML = '<tr><td colspan="5">No history records found.</td></tr>';
             return;
         }
 
+        console.log(`Rendering ${historyItems.length} history items.`); // Added log
+
         historyItems.forEach(item => {
+            console.log('Rendering item:', item); // Added log for each item
             const row = document.createElement('tr');
             
             // Date & Time (Format using the formatDate helper)
             const dateCell = document.createElement('td');
-            dateCell.textContent = formatDate(item.created_at);
+            try {
+                dateCell.textContent = formatDate(item.created_at);
+            } catch (e) {
+                console.error('Error formatting date for item:', item, e); // Added error log
+                dateCell.textContent = item.created_at || '-'; // Display raw date or hyphen on error
+            }
             row.appendChild(dateCell);
             
             // Activity
@@ -2469,6 +2486,7 @@
             
             tableBody.appendChild(row);
         });
+        console.log('Finished rendering history table.'); // Added log
     }
 
     // =============================
@@ -2476,7 +2494,7 @@
     // =============================
 
     async function handleDailyAssessmentFile(file) {
-        if (!isLoggedIn || !currentUser || !currentUser.userId) { // More robust check
+        if (!isLoggedIn || !currentUser || !currentUser.userId) {
             alert('Please log in before uploading files.');
             console.error('Upload attempt failed: User not logged in or userId is missing.');
             return null;
@@ -2485,7 +2503,7 @@
         const fileId = generateUniqueId();
         const fileData = new FormData();
         fileData.append('file', file);
-        fileData.append('userId', currentUser.userId); // Should now be guaranteed to be available
+        fileData.append('userId', currentUser.userId);
         fileData.append('fileId', fileId);
 
         console.log('Attempting to upload Daily Assessment file.');
@@ -2494,7 +2512,6 @@
         const uploadUrl = `${BACKEND_URL}/api/daily-assessment/upload`;
         console.log('Fetching to URL:', uploadUrl);
 
-        // Log the contents of the FormData
         console.log('FormData contents:');
         for (let pair of fileData.entries()) {
             console.log(pair[0]+ ': ' + pair[1]);
@@ -2511,22 +2528,25 @@
             if (!res.ok) {
                 const errorText = await res.text();
                 console.error('Upload failed response:', res.status, errorText);
-                throw new Error(`Upload failed: ${res.status} - ${errorText}`); // Include status and text
+                throw new Error(`Upload failed: ${res.status} - ${errorText}`);
             }
 
             const result = await res.json();
             console.log('Upload successful response:', result);
-            alert('Daily Assessment file uploaded successfully!'); // More specific alert
+            alert('Daily Assessment file uploaded successfully!');
 
+            // Store the uploaded file ID
+            lastUploadedDailyAssessmentFileId = result.fileId; // Store the ID
+            console.log('Stored last uploaded file ID in handleDailyAssessmentFile:', lastUploadedDailyAssessmentFileId); // Add this log
 
-            // Send history entry to backend (This part seems to be a separate fetch)
+            // Send history entry to backend
             await fetch(`${BACKEND_URL}/api/history/`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                     user_id: currentUser.userId, // Use the valid userId
+                     user_id: currentUser.userId,
                     activity_type: 'Daily Assessment File Upload',
-                    file_id: fileId,
+                    file_id: result.fileId,
                     file_name: file.name,
                      report_id: null,
                      filters: {}
@@ -2534,12 +2554,11 @@
             });
             console.log('File upload history sent to backend.');
 
-
-            return fileId; // Return the generated fileId on success
+            return result.fileId;
 
         } catch (err) {
             console.error('Error during file upload fetch:', err);
-            alert(`Upload failed: ${err.message}`); // Show error message in alert
+            alert(`Upload failed: ${err.message}`);
             return null;
         }
     }
@@ -2556,36 +2575,73 @@
         return filters;
     }
 
-    async function generateDailyAssessmentReport(relatedFileId = '-') {
+    async function generateReport() {
+        console.log('Attempting to generate report...'); // Add this log
+        console.log('Value of lastUploadedDailyAssessmentFileId before report generation:', lastUploadedDailyAssessmentFileId); // Add this log
+
+        if (!lastUploadedDailyAssessmentFileId) {
+            alert('Please upload a Daily Assessment file first.');
+            return;
+        }
+
         if (!isLoggedIn || !currentUser) {
-            showLoginPopup('Please login to generate Daily Assessment report.');
+            showLoginPopup('Please login to generate report.');
             return;
         }
 
         const reportId = generateUniqueId();
         const filters = getSelectedFilters('filter-form');
 
+        console.log('Generating report with:', {
+            userId: currentUser.userId,
+            filters,
+            reportId,
+            fileId: lastUploadedDailyAssessmentFileId
+        });
+
         try {
             const res = await fetch(`${BACKEND_URL}/api/daily-assessment/report`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ userId: currentUser.userId, filters, reportId })
+                body: JSON.stringify({ userId: currentUser.userId, filters, reportId, fileId: lastUploadedDailyAssessmentFileId })
             });
-            if (!res.ok) throw new Error('Failed to generate report');
+            if (!res.ok) {
+                 const errorText = await res.text();
+                 console.error('Report generation failed response:', res.status, errorText);
+                 throw new Error(`Failed to generate report: ${errorText}`);
+            }
 
-            addHistoryEntry({
-                date: new Date(),
-                activity: 'DA Report',
-                fileName: 'Daily_Assessment_Report',
-                fileSize: '-',
-                fileId: relatedFileId,
-                reportId: reportId
-            });
+            const result = await res.json();
+            console.log('Report generation successful:', result);
 
-            alert(`Daily Assessment report generated. ID: ${reportId}`);
+            // Add report generation to history
+             await fetch(`${BACKEND_URL}/api/history/`, {
+                 method: 'POST',
+                 headers: { 'Content-Type': 'application/json' },
+                 body: JSON.stringify({
+                      user_id: currentUser.userId,
+                     activity_type: 'Daily Assessment Report',
+                     file_id: lastUploadedDailyAssessmentFileId,
+                     file_name: 'Daily_Assessment_Report', // Or get a better name
+                     report_id: reportId,
+                     filters: filters
+                 })
+             });
+             console.log('Report history sent to backend.');
+
+            alert(`Report generated successfully! Report ID: ${reportId}`);
+
+            // Optional: Handle report download
+            // window.open(result.reportPath); // Assuming backend returns a downloadable path
+
+            // Initiate download using the reportId
+            const downloadUrl = `${BACKEND_URL}/api/daily-assessment/report/${reportId}`;
+            console.log('Attempting to download report from:', downloadUrl);
+            window.open(downloadUrl, '_blank'); // Open in a new tab to trigger download
 
         } catch (error) {
-            alert('Failed to generate report. Please try again.');
+            console.error('Error during report generation:', error);
+            alert(`Failed to generate report: ${error.message}`);
         }
     }
 
@@ -2609,22 +2665,36 @@
                 method: 'POST',
                 body: fileData
             });
-            if (!res.ok) throw new Error('Upload failed');
-            alert('Impact Assessment file uploaded');
+            if (!res.ok) {
+                const errorText = await res.text();
+                console.error('IA Upload failed response:', res.status, errorText);
+                throw new Error(`IA Upload failed: ${res.status} - ${errorText}`);
+            }
 
-            addHistoryEntry({
-                date: new Date(),
-                activity: 'IA File Upload',
-                fileName: file.name,
-                fileSize: file.size,
-                fileId: fileId,
-                reportId: '-'
+            const result = await res.json();
+            console.log('IA Upload successful response:', result);
+            alert('Impact Assessment file uploaded successfully!');
+
+            // Add upload to history
+            await fetch(`${BACKEND_URL}/api/history/`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    user_id: currentUser.userId,
+                    activity_type: 'Impact Assessment File Upload',
+                    file_id: result.fileId,
+                    file_name: file.name,
+                    report_id: null,
+                    filters: {}
+                })
             });
+            console.log('IA File upload history sent to backend.');
 
-            return fileId;
+            return result.fileId;
 
         } catch (err) {
-            alert('Upload failed');
+            console.error('Error during IA file upload fetch:', err);
+            alert(`IA Upload failed: ${err.message}`);
             return null;
         }
     }
@@ -2638,27 +2708,49 @@
         const reportId = generateUniqueId();
         const filters = getSelectedFilters('impact-filter-form');
 
+        // We need the fileId for Impact Assessment report generation as well
+        // Assuming you'd get the last uploaded IA file ID similarly to DA
+        // For now, this function is not fully implemented to use a specific file ID
+        console.log('Generating Impact Assessment report with:', { userId: currentUser.userId, filters, reportId });
+
         try {
             const res = await fetch(`${BACKEND_URL}/api/impact-assessment/report`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ userId: currentUser.userId, filters, reportId })
             });
-            if (!res.ok) throw new Error('Failed to generate report');
+            if (!res.ok) {
+                 const errorText = await res.text();
+                 console.error('IA Report generation failed response:', res.status, errorText);
+                 throw new Error(`IA Report generation failed: ${errorText}`);
+            }
 
-            addHistoryEntry({
-                date: new Date(),
-                activity: 'IA Report',
-                fileName: 'Impact_Assessment_Report',
-                fileSize: '-',
-                fileId: relatedFileId,
-                reportId: reportId
+            const result = await res.json();
+            console.log('IA Report generation successful:', result);
+
+            // Add report generation to history
+            await fetch(`${BACKEND_URL}/api/history/`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    user_id: currentUser.userId,
+                    activity_type: 'Impact Assessment Report',
+                    file_id: relatedFileId, // This might need adjustment to use the actual IA fileId
+                    file_name: 'Impact_Assessment_Report',
+                    report_id: reportId,
+                    filters: filters
+                })
             });
+             console.log('IA Report history sent to backend.');
 
             alert(`Impact Assessment report generated. ID: ${reportId}`);
 
+             // Optional: Handle report download
+            // window.open(result.reportPath); // Assuming backend returns a downloadable path
+
         } catch (error) {
-            alert('Failed to generate report. Please try again.');
+            console.error('Error during IA report generation:', error);
+            alert(`Failed to generate Impact Assessment report: ${error.message}`);
         }
     }
 
@@ -3284,19 +3376,26 @@
                     // Update the header text based on all selected options
                     const selectedOptions = container.querySelectorAll('.filter-option.selected');
                     if (selectedOptions.length === 0) {
-                         if (container.id === 'donor-select') selectedTextSpan.textContent = 'Select donor';
-                         else if (container.id === 'grade-select') selectedTextSpan.textContent = 'Select grades';
-                         else if (container.id === 'subject-select') selectedTextSpan.textContent = 'Select subjects';
-                         else if (container.id === 'region-select') selectedTextSpan.textContent = 'Select regions';
-                         else if (container.id === 'state-select') selectedTextSpan.textContent = 'Select states';
-                         else if (container.id === 'program-select') selectedTextSpan.textContent = 'Select programs';
-                         else if (container.id === 'topic-select') selectedTextSpan.textContent = 'Select topics';
-                         else selectedTextSpan.textContent = 'Select options';
+                         // This section might be the issue if selectedTextSpan is null here
+                         // Check if selectedTextSpan exists before setting textContent
+                         if (selectedTextSpan) { // Add this check
+                             if (container.id === 'donor-select') selectedTextSpan.textContent = 'Select donors';
+                             else if (container.id === 'grade-select') selectedTextSpan.textContent = 'Select grades';
+                             else if (container.id === 'subject-select') selectedTextSpan.textContent = 'Select subjects';
+                             else if (container.id === 'region-select') selectedTextSpan.textContent = 'Select regions';
+                             else if (container.id === 'state-select') selectedTextSpan.textContent = 'Select states';
+                             else if (container.id === 'program-select') selectedTextSpan.textContent = 'Select programs';
+                             else if (container.id === 'topic-select') selectedTextSpan.textContent = 'Select topics';
+                             else selectedTextSpan.textContent = 'Select options';
+                         } // End added check
 
 
                     } else {
                         const selectedValues = Array.from(selectedOptions).map(opt => opt.textContent.trim().replace('✔', ''));
-                        selectedTextSpan.textContent = selectedValues.join(', ');
+                        // Check if selectedTextSpan exists before setting textContent
+                        if (selectedTextSpan) { // Add this check
+                            selectedTextSpan.textContent = selectedValues.join(', ');
+                        } // End added check
                     }
 
 
@@ -3305,7 +3404,10 @@
                         opt.classList.remove('selected');
                     });
                     this.classList.add('selected');
-                    selectedTextSpan.textContent = this.textContent.trim();
+                    // Check if selectedTextSpan exists before setting textContent
+                    if (selectedTextSpan) { // Add this check
+                         selectedTextSpan.textContent = this.textContent.trim();
+                    } // End added check
                     container.classList.remove('active'); // Close the dropdown after selection
                 }
 

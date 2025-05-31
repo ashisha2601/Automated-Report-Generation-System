@@ -9,6 +9,8 @@ from sqlalchemy.orm import Session
 from app.core.database import get_db
 from app.models.history import History
 from app.models.user import User
+from app.report_generator.da_analysis import DailyAssessmentAnalyzer
+from fastapi.responses import FileResponse
 
 router = APIRouter()
 
@@ -20,6 +22,7 @@ class ReportRequest(BaseModel):
     userId: str
     filters: Dict[str, List[str]]
     reportId: str
+    fileId: str
 
 @router.post("/upload")
 async def upload_file(
@@ -101,33 +104,86 @@ async def generate_report(
         user = db.query(User).filter(User.id == request.userId).first()
         if not user:
             raise HTTPException(status_code=404, detail="User not found")
-        
+
+        # Find the uploaded file based on fileId and userId
+        file_entry = db.query(History).filter(
+            History.user_id == request.userId,
+            History.file_id == request.fileId,
+            History.activity_type == "daily_assessment_upload"
+        ).first()
+
+        if not file_entry:
+            raise HTTPException(status_code=404, detail="Uploaded file not found for this user.")
+
+        # Construct the path to the uploaded file
+        uploaded_file_path = os.path.join(UPLOAD_DIR, f"{request.fileId}_{file_entry.file_name}")
+
+        if not os.path.exists(uploaded_file_path):
+             # This might happen if the file was deleted or upload failed silently earlier
+            raise HTTPException(status_code=404, detail="Uploaded file not found on server.")
+
+        # Initialize the analyzer with the uploaded file path
+        analyzer = DailyAssessmentAnalyzer(uploaded_file_path)
+
+        # Generate the report, passing the reportId and filters
+        report_path = analyzer.generate_report(request.reportId, request.filters) # Pass report_id and filters
+
         # Record in history
         history_entry = History(
             id=str(uuid.uuid4()),
             user_id=request.userId,
             activity_type="daily_assessment_report",
-            file_id=request.reportId,
+            file_id=request.fileId, # Associate report with the uploaded file
             report_id=request.reportId,
-            filters=request.filters
+            filters=request.filters,
+            file_name=file_entry.file_name # Store the name of the file that was analyzed
         )
         db.add(history_entry)
         db.commit()
-        
-        # --- Report Generation Logic Here ---
-        # This is where you would typically process the uploaded data (likely stored/referenced by fileId),
-        # apply filters from request.filters, and generate the report (e.g., PPT).
-        # The current code only records history and returns success message.
-        print(f"Generating report for reportId: {request.reportId} with filters: {request.filters}")
-        
+
         return {
             "message": "Report generated successfully",
             "reportId": request.reportId,
+            "reportPath": report_path, # Return the generated path
             "generatedAt": datetime.now().isoformat()
         }
     except Exception as e:
         db.rollback()
         print(f"Error during report generation: {e}")
         raise HTTPException(status_code=500, detail=f"Failed to generate report: {e}")
+
+# Add GET endpoint to download the report
+@router.get("/report/{report_id}")
+async def download_report(report_id: str, db: Session = Depends(get_db)):
+    try:
+        # Optional: Check if the report exists in history before serving (for security/validation)
+        report_history_entry = db.query(History).filter(
+            History.report_id == report_id,
+            History.activity_type == "daily_assessment_report"
+            # Add user_id check here if you want to restrict downloads to the user who generated the report
+            # History.user_id == current_user.id
+        ).first()
+
+        if not report_history_entry:
+            raise HTTPException(status_code=404, detail="Report history not found.")
+
+        # Construct the expected path of the report file
+        report_file_path = os.path.join("reports", "daily_assessment", f"{report_id}.pptx")
+
+        # Check if the file actually exists on the server
+        if not os.path.exists(report_file_path):
+            # This could happen if generation failed partially or file was deleted manually
+            raise HTTPException(status_code=404, detail="Report file not found on server.")
+
+        # Return the file as a FileResponse
+        return FileResponse(
+            path=report_file_path,
+            media_type="application/vnd.openxmlformats-officedocument.presentationml.presentation",
+            filename=f"daily_assessment_report_{report_id}.pptx" # Suggest a filename for download
+        )
+
+    except Exception as e:
+        print(f"Error during report download: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
 
 __all__ = ["router"]

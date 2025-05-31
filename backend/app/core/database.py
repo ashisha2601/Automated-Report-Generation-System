@@ -3,11 +3,14 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 import os
 
+# Get the absolute path to the backend directory
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 # Create the database directory if it doesn't exist
-os.makedirs("app/data", exist_ok=True)
+os.makedirs(os.path.join(BASE_DIR, "app", "data"), exist_ok=True)
 
 # SQLite database URL
-SQLALCHEMY_DATABASE_URL = "sqlite:///./app/data/app.db"
+SQLALCHEMY_DATABASE_URL = f"sqlite:///{os.path.join(BASE_DIR, 'app', 'data', 'app.db')}"
 
 # Create SQLAlchemy engine
 engine = create_engine(

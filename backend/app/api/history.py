@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException, Depends
 from sqlalchemy.orm import Session
-from typing import List, Optional
+from typing import List, Optional, Dict
 from app.core.database import get_db
 from app.models.history import History
 from app.models.user import User
@@ -10,6 +10,7 @@ import logging
 import csv
 import os
 from fastapi.responses import FileResponse
+import uuid
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -17,6 +18,15 @@ logger = logging.getLogger(__name__)
 
 router = APIRouter()
 __all__ = ["router"]
+
+# Pydantic model for creating a new history entry
+class HistoryCreate(BaseModel):
+    user_id: str
+    activity_type: str
+    file_id: Optional[str] = None # Allow None for cases without a specific file
+    file_name: Optional[str] = None # Allow None
+    report_id: Optional[str] = None # Allow None
+    filters: Optional[Dict] = None # Allow None
 
 # ✅ Updated schema to match your model fields
 class HistoryResponse(BaseModel):
@@ -31,6 +41,38 @@ class HistoryResponse(BaseModel):
 
     class Config:
         from_attributes = True
+
+# Add POST endpoint to create history entries
+@router.post("/", response_model=HistoryResponse)
+async def create_history_entry(
+    history_entry: HistoryCreate,
+    db: Session = Depends(get_db)
+):
+    try:
+        logger.info(f"Attempting to create history entry: {history_entry.activity_type} for user {history_entry.user_id}")
+
+        # Create a new History object from the Pydantic model
+        db_history_entry = History(
+            id=str(uuid.uuid4()), # Generate a new UUID for the history entry ID
+            user_id=history_entry.user_id,
+            activity_type=history_entry.activity_type,
+            file_id=history_entry.file_id,
+            file_name=history_entry.file_name,
+            report_id=history_entry.report_id,
+            filters=history_entry.filters,
+            created_at=datetime.utcnow() # Set creation time on the backend
+        )
+
+        db.add(db_history_entry)
+        db.commit()
+        db.refresh(db_history_entry)
+
+        logger.info(f"Successfully created history entry with ID: {db_history_entry.id}")
+        return db_history_entry # Return the created entry
+    except Exception as e:
+        db.rollback()
+        logger.error(f"Error creating history entry: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
 
 # ✅ Moved this route to be defined before /{user_id}
 @router.get("/all", response_model=List[HistoryResponse])

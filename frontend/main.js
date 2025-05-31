@@ -4,6 +4,7 @@
 let isLoggedIn = false;
 let currentUser = null;
 let userHistory = [];
+let lastUploadedDailyAssessmentFileId = null;
 
 function generateUniqueIdForUser(email) {
     return 'AIF' + Date.now() + '_' + btoa(email).replace(/[^a-zA-Z0-9]/g, '').slice(0, 8);
@@ -63,7 +64,30 @@ async function handleDailyAssessmentFile(file) {
             reportId: '-'
         });
 
-        return fileId;
+        const result = await res.json();
+        console.log('Upload successful response:', result);
+        alert('Daily Assessment file uploaded successfully!');
+
+        // Store the uploaded file ID
+        lastUploadedDailyAssessmentFileId = result.fileId;
+        console.log('Stored last uploaded file ID:', lastUploadedDailyAssessmentFileId);
+
+        // Send history entry to backend
+        await fetch(`${BACKEND_URL}/api/history/`, {
+             method: 'POST',
+             headers: { 'Content-Type': 'application/json' },
+             body: JSON.stringify({
+                  user_id: currentUser.userId,
+                 activity_type: 'Daily Assessment File Upload',
+                 file_id: result.fileId,
+                 file_name: file.name,
+                  report_id: null,
+                  filters: {}
+             })
+         });
+         console.log('File upload history sent to backend.');
+
+        return result.fileId;
 
     } catch (err) {
         alert('Upload failed');
@@ -83,33 +107,66 @@ function getSelectedFilters(formId) {
     return filters;
 }
 
-async function generateDailyAssessmentReport(relatedFileId = '-') {
+async function generateReport() {
     if (!isLoggedIn || !currentUser) {
-        showLoginPopup('Please login to generate Daily Assessment report.');
+        showLoginPopup('Please login to generate report.');
+        return;
+    }
+
+    // Use the last uploaded file ID
+    const fileIdToAnalyze = lastUploadedDailyAssessmentFileId;
+
+    if (!fileIdToAnalyze) {
+        alert('Please upload a Daily Assessment file first.');
         return;
     }
 
     const reportId = generateUniqueId();
     const filters = getSelectedFilters('filter-form');
 
+    console.log('Generating report with:', {
+        userId: currentUser.userId,
+        filters,
+        reportId,
+        fileId: fileIdToAnalyze
+    });
+
     try {
-        const res = await fetch('/api/daily-assessment/report', {
+        const res = await fetch(`${BACKEND_URL}/api/daily-assessment/report`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ userId: currentUser.userId, filters, reportId })
+            body: JSON.stringify({
+                userId: currentUser.userId,
+                filters,
+                reportId,
+                fileId: fileIdToAnalyze
+            })
         });
         if (!res.ok) throw new Error('Failed to generate report');
 
-        addHistoryEntry({
-            date: new Date(),
-            activity: 'DA Report',
-            fileName: 'Daily_Assessment_Report',
-            fileSize: '-',
-            fileId: relatedFileId,
-            reportId: reportId
-        });
+        const result = await res.json();
+        console.log('Report generation successful response:', result);
 
-        alert(`Daily Assessment report generated. ID: ${reportId}`);
+        // Add report generation to history
+        await fetch(`${BACKEND_URL}/api/history/`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                user_id: currentUser.userId,
+                activity_type: 'daily_assessment_report',
+                file_id: fileIdToAnalyze,
+                file_name: 'Daily_Assessment_Report',
+                report_id: reportId,
+                filters: filters
+            })
+        });
+         console.log('Report history sent to backend.');
+
+        alert(`Report generated successfully! Report ID: ${reportId}`);
+
+        // Optionally, you could trigger a download here using result.reportPath
+        // if your download endpoint is set up to serve files based on the path
+        // window.open(`${BACKEND_URL}/api/daily-assessment/report/${reportId}`); // Assuming the GET endpoint works
 
     } catch (error) {
         alert('Failed to generate report. Please try again.');
